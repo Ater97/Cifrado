@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Encryption
 {
-    class Utilities
+    static class UtilitiesForRSA
     {
-        public int GetPrimeNumber(int num)
+        public static int GetPrimeNumber(int num)
         {
             int i, n = 4, cont = 2;
             if (num > 2) // 2 & 3, too low.
@@ -38,7 +38,7 @@ namespace Encryption
             return 3;
         }
 
-        public int[] Phi(int p, int q)
+        public static int[] Phi(int p, int q)
         {
             int[]NyZ = new int[2];
             NyZ[0] = p * q;
@@ -46,7 +46,7 @@ namespace Encryption
             return NyZ;
         }
 
-        private bool CheckCoprime(int A,int B)
+        private static bool CheckCoprime(int A,int B)
         {
             while (A != 0 && B != 0)
             {
@@ -60,7 +60,7 @@ namespace Encryption
 
         }
 
-        public int getFirstCoprime(int A, int inicial, int final)
+        public static int getFirstCoprime(int A, int inicial, int final)
         {
             for (int i = inicial; i < final ; i++)
             {

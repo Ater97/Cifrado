@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Encryption
 {
-    class RSA
+    static class RSA
     {
-        Utilities Ut = new Utilities();
-        int PrivateKEy = 0;
+        static UtilitiesForRSA Ut = new UtilitiesForRSA();
+        static int PrivateKEy = 0;
 
-        public string getPublicKey(int np, int nq) // n prime number
+        
+
+        public static string getPublicKey(int np, int nq) // n prime number
         {
             int p = Ut.GetPrimeNumber(np);
             int q = Ut.GetPrimeNumber(nq);
@@ -21,7 +23,7 @@ namespace Encryption
             return NyZ[0].ToString() + "," + k.ToString();
         }
         
-        public int getPrivateKEy(int k, int z, int length)
+        public static int getPrivateKEy(int k, int z, int length)
         {    //k* j = 1(mod z) Private key
             for (int i = 0; i < length; i++)
             {

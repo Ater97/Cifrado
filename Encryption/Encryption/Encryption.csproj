@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RCA.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="RSA.cs" />
+    <Compile Include="UtilitiesForRSA.cs" />
+    <Compile Include="Utilities\CommandLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

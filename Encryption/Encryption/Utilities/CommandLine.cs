@@ -21,9 +21,14 @@ namespace Encryption.Utilities
 
         private static bool fileExist(string command, string filePath)
         {
-            FileStream original = new FileStream(filePath, FileMode.Open);
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine("ERROR: The file does not exists!");
+                return false;
+            }
             if (command == "-f" || command == "-F")
             {
+
                 return true;
             }
             Console.WriteLine("ERROR -f command is missing!");
