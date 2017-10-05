@@ -10,7 +10,7 @@ namespace Encryption
     {
         static void Main(string[] args)
         {
-            RCA rca = new RCA();
+            RSA rca = new RSA();
             int np = int.Parse(Console.ReadLine());
             Console.WriteLine(rca.getPublicKey(np, int.Parse(Console.ReadLine())));
          

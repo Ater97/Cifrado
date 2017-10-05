@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Encryption
 {
-    class RCA
+    class RSA
     {
         Utilities Ut = new Utilities();
         int PrivateKEy = 0;
