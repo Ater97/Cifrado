@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Encryption.Utilities;
 
 namespace Encryption
 {
@@ -35,9 +36,9 @@ namespace Encryption
             Console.WriteLine("2.2)Press Enter");
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
-            Console.WriteLine("PRESS ENTER TO CONTINUE!");
+            Console.Write("ENCRYPTOR> ");
+            CommandLine.isCorrectCommand(Console.ReadLine());
             Console.ReadKey();
-            
         }
     }
 }

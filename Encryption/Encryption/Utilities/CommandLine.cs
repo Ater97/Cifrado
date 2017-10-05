@@ -24,6 +24,7 @@ namespace Encryption.Utilities
             if (!File.Exists(filePath))
             {
                 Console.WriteLine("ERROR: The file does not exists!");
+                Console.ReadKey();
                 return false;
             }
             if (command == "-f" || command == "-F")
