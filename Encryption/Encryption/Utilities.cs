@@ -35,7 +35,7 @@ namespace Encryption
                 }
                 return n - 1;
             }
-            return 0;
+            return 3;
         }
 
         public int[] Phi(int p, int q)

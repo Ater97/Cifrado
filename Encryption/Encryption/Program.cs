@@ -12,9 +12,7 @@ namespace Encryption
         {
             RCA rca = new RCA();
             int np = int.Parse(Console.ReadLine());
-            Console.WriteLine(rca.PublicKey(np, int.Parse(Console.ReadLine())));
-
-
+            Console.WriteLine(rca.getPublicKey(np, int.Parse(Console.ReadLine())));
          
             Console.ReadKey();
         }
