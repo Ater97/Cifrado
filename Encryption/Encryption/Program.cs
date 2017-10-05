@@ -38,7 +38,6 @@ namespace Encryption
             Console.WriteLine();
             Console.Write("ENCRYPTOR> ");
             CommandLine.isCorrectCommand(Console.ReadLine());
-            Console.ReadKey();
         }
     }
 }

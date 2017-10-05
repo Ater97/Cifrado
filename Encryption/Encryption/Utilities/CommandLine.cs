@@ -14,21 +14,22 @@ namespace Encryption.Utilities
             string[] commands = command.Split(' ');
             string filePath = string.Empty;
             if (command == "") return false;
-            if (command.Length > 3) return false;
+            if (commands.Length > 3) return false;
             return isEncrypting(commands);
             
         }
 
         private static bool fileExist(string command, string filePath)
         {
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine("ERROR: The file does not exists!");
-                Console.ReadKey();
-                return false;
-            }
             if (command == "-f" || command == "-F")
             {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("ERROR: The file does not exists!");
+                    Console.ReadKey();
+                    return false;
+                }
+                //ADD RSA
 
                 return true;
             }
