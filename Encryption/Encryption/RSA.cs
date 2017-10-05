@@ -8,8 +8,8 @@ namespace Encryption
 {
     static class RSA
     {
-        static int PrivateKEy = 0;
-
+        static int PrivateKey = 0;
+        static int[] PublicKey = new int[2];
         
 
         public static string getPublicKey(int np, int nq) // n prime number
@@ -18,7 +18,9 @@ namespace Encryption
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
             int[] NyZ = UtilitiesForRSA.Phi(p, q);
             int k = UtilitiesForRSA.getFirstCoprime(NyZ[1], 50, 100);
-            PrivateKEy = getPrivateKEy(k, NyZ[1], 100);
+            PrivateKey = getPrivateKEy(k, NyZ[1], 100);
+            PublicKey[0] = NyZ[0];
+            PublicKey[1] = k;
             return NyZ[0].ToString() + "," + k.ToString();
         }
         
@@ -30,6 +32,24 @@ namespace Encryption
                     return i;
             }
             return 0;
+        }
+
+        private static byte Encrypt(byte E)
+        { //P^k = E ( mod n )
+            int P = (Int32)(E);
+            double P2 = (Math.Pow(P, PublicKey[1]));
+            P2 = P2 % PublicKey[0];
+            P = (int) Math.Round(P2);
+            return (byte)P;
+        }
+
+        public static byte[] Encrypt(byte[] E)
+        {
+            for (int i = 0; i < E.Length; i++)
+            {
+                E[i] = Encrypt(E[i]);
+            }
+            return E;
         }
     }
 }
