@@ -12,7 +12,7 @@ namespace Encryption
         static bool exit = false;
         static void Main(string[] args)
         {
-           Console.WriteLine(RSA.getPublicKey(2,5));
+            Console.WriteLine(RSA.getPublicKey(2,5));
             byte a = (byte)(int.Parse(Console.ReadLine()));
             a = (RSA.Encrypt(a));
             Console.WriteLine(((a).ToString()));

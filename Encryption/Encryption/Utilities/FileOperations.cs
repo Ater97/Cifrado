@@ -12,7 +12,7 @@ namespace Encryption.Utilities
         public static byte[] getFileBytes(string filePath) {
             FileStream original = new FileStream(filePath, FileMode.Open);
             BinaryReader lecturaBinaria = new BinaryReader(original);
-            var bytes = lecturaBinaria.ReadBytes((int)original.Length);
+            byte [] bytes = lecturaBinaria.ReadBytes((int)original.Length);
             lecturaBinaria.Close();
             return bytes;
         }
