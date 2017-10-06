@@ -48,6 +48,7 @@
     <Compile Include="RSA.cs" />
     <Compile Include="UtilitiesForRSA.cs" />
     <Compile Include="Utilities\CommandLine.cs" />
+    <Compile Include="Utilities\FileOperations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

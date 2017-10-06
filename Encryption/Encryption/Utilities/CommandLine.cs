@@ -12,8 +12,20 @@ namespace Encryption.Utilities
         public static bool isCorrectCommand(string command)
         {
             string[] commands = command.Split(' ');
+            string[] newCommands = new string[3];
             string filePath = string.Empty;
             if (command == "") return false;
+            if (commands.Length > 3)
+            {
+                for (int i = 2; i < commands.Length; i++)
+                {
+                    filePath = filePath + " " + commands[i];
+                }
+                newCommands[0] = commands[0];
+                newCommands[1] = commands[1];
+                newCommands[2] = filePath;
+                return isEncrypting(newCommands);
+            }
             if (commands.Length > 3) return false;
             return isEncrypting(commands);
             
@@ -30,7 +42,10 @@ namespace Encryption.Utilities
                     return false;
                 }
                 //ADD RSA
-
+                byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                FileOperations.writeEncryptedData(filePath,encryptedData);
+                Console.WriteLine("File encrypted successfully!");
+                Console.ReadKey();
                 return true;
             }
             Console.WriteLine("ERROR -f command is missing!");

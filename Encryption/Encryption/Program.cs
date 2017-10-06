@@ -13,11 +13,10 @@ namespace Encryption
         static void Main(string[] args)
         {
             RSA.getPublicKey(2, 5);
-           Console.WriteLine((RSA.Encrypt((byte)(int.Parse(Console.ReadLine()))).ToString()));
             while (!exit)
             {
                 Console.Clear();
-                //menu();
+                menu();
 
             }
         }
