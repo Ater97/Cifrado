@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Encryption
 {
@@ -28,9 +29,9 @@ namespace Encryption
             int phi = (p - 1) * (q - 1);
 
             //
-            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 6); //primo relativo entre 1 y phi(n)
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7*p); //primo relativo entre 1 y phi(n)
             //e * d = 1 mod(phi(n))
-            int d = PrivateKey = getPrivateKey(phi, e, 0); //n,d
+            int d = PrivateKey = getPrivateKey(phi, e, 7); //n,d
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
@@ -50,9 +51,13 @@ namespace Encryption
 
         public static byte Encrypt(byte dat)
         { //dat^e mod (n)
-            int P = (Int32)(dat);
-            double P2 = (Math.Pow(P, PublicKey[1]));
-            P2 = P2 % PublicKey[0];
+            int P = dat;
+            BigInteger P2 = BigInteger.Pow(P, PublicKey[1]);
+            do
+            {
+                P2 %= PublicKey[0];
+            }
+            while (P2 > 255);
             return (byte)P2;
         }
 
@@ -67,9 +72,13 @@ namespace Encryption
         
         public static byte Decrypt(byte Dat)
         {//dat^d mod(n)
-            int P = (Int32)(Dat);
-            double P2 = Math.Pow(P, PrivateKey);
-            P2 = P2 % PublicKey[0];
+            int P = (Dat);
+            BigInteger P2 = BigInteger.Pow(P, PrivateKey);
+            do
+            {
+                P2 %= PublicKey[0];
+            }
+            while (P2 > 255);
             return (byte)P2;
         }
 
