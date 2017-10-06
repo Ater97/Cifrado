@@ -28,7 +28,7 @@ namespace Encryption
             int phi = (p - 1) * (q - 1);
 
             //
-            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7); //primo relativo entre 1 y phi(n)
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 6); //primo relativo entre 1 y phi(n)
             //e * d = 1 mod(phi(n))
             int d = PrivateKey = getPrivateKey(phi, e, 0); //n,d
 
@@ -53,7 +53,7 @@ namespace Encryption
             int P = (Int32)(dat);
             double P2 = (Math.Pow(P, PublicKey[1]));
             P2 = P2 % PublicKey[0];
-            return (byte)P;
+            return (byte)P2;
         }
 
         private static byte[] Encrypt(byte[] E)
@@ -70,7 +70,7 @@ namespace Encryption
             int P = (Int32)(Dat);
             double P2 = Math.Pow(P, PrivateKey);
             P2 = P2 % PublicKey[0];
-            return (byte)P;
+            return (byte)P2;
         }
 
         private static byte[] Decrypt(byte[] E)

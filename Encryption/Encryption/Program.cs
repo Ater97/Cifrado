@@ -12,11 +12,13 @@ namespace Encryption
         static bool exit = false;
         static void Main(string[] args)
         {
-           Console.WriteLine(RSA.getPublicKey(2,5));
-            byte a = (byte)(int.Parse(Console.ReadLine()));
-            a = (RSA.Encrypt(a));
-            Console.WriteLine(((a).ToString()));
-            Console.WriteLine(RSA.Decrypt(a).ToString());
+            //2 y 5 = 3 y 11
+           Console.WriteLine(RSA.getPublicKey(8,9));
+            byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
+            byte b = (RSA.Encrypt(a[0]));
+            Console.WriteLine(((b).ToString()));
+            Console.WriteLine(Convert.ToChar(RSA.Decrypt(b)));
+            Console.WriteLine((RSA.Decrypt(b)).ToString());
             Console.ReadKey();
             while (!exit)
             {
