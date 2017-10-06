@@ -18,11 +18,16 @@ namespace Encryption
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
-                byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
+                Console.WriteLine("public key        " + RSA.getPublicKey(50, 96));
+                /*byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
                 byte[] b = (RSA.Encrypt(a));
                 Console.WriteLine("byte encriptado   " + (System.Text.Encoding.UTF8.GetString(b)));
                 Console.WriteLine("caracter decrypt  " + System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
+                */
+                int a = (int.Parse(Console.ReadLine()));
+                int b = RSA.EncriptKey(a);
+                Console.WriteLine("byte encriptado   " + b.ToString());
+                Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
                 Console.ReadKey();
             }
             //************************************************************************************
