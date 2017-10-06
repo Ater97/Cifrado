@@ -14,13 +14,17 @@ namespace Encryption
         {
             //MOCK
             //2 y 5 = 3 y 11
-            Console.WriteLine("public key        " + RSA.getPublicKey(5,9));
-            byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
-            byte[] b = (RSA.Encrypt(a));
-            Console.WriteLine("byte encriptado   "+(System.Text.Encoding.UTF8.GetString(b)));
-            Console.WriteLine("caracter decrypt  "+ System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
-            Console.ReadKey();
-            Console.ReadKey();
+            //5 y 9
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
+                byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
+                byte[] b = (RSA.Encrypt(a));
+                Console.WriteLine("byte encriptado   " + (System.Text.Encoding.UTF8.GetString(b)));
+                Console.WriteLine("caracter decrypt  " + System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
+                Console.ReadKey();
+            }
             //************************************************************************************
 
             while (!exit)

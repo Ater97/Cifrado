@@ -35,6 +35,10 @@ namespace Encryption
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
+        public static string getPrivateKey()
+        {
+            return PublicKey[0].ToString() + "," + PrivateKey.ToString();
+        }
         
         public static int getPrivateKey(int phi, int e, int o)
         {    
@@ -53,11 +57,18 @@ namespace Encryption
         { //dat^e mod (n)
             int P = dat;
             BigInteger P2 = BigInteger.Pow(P, PublicKey[1]);
-            do
+            try
             {
-                P2 %= PublicKey[0];
+                do
+                {
+                    P2 %= PublicKey[0];
+                }
+                while (P2 > 255);
             }
-            while (P2 > 255);
+            catch
+            {
+                return (byte)(P2 - 255);
+            }
             return (byte)P2;
         }
 
@@ -74,11 +85,11 @@ namespace Encryption
         {//dat^d mod(n)
             int P = (Dat);
             BigInteger P2 = BigInteger.Pow(P, PrivateKey);
-            do
+            //do
             {
                 P2 %= PublicKey[0];
             }
-            while (P2 > 255);
+            //while (P2 > 255);
             return (byte)P2;
         }
 
