@@ -3,50 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Encryption
 {
     static class RSA
     {
-        static int PrivateKey = 0;
-        static int[] PublicKey = new int[2];
-        
+        static int PrivateKey = 0; //n,d
+        static int[] PublicKey = new int[2];//n,e
+        /*
+         *  n = p * q 
+         *   Φ(n) = (p - 1) * (q - 1) 
+         *    1 < e < Φ(n) 
+         *     d = inv(e, Φ(n)) ⇒ mcd[e, Φ(n)] = 1
+         *     (n, d) ⇒ Clave privada 
+         *      (n, e) ⇒ Clave pública
+
+         */
 
         public static string getPublicKey(int np, int nq) // n prime number
         {
             int p = UtilitiesForRSA.GetPrimeNumber(np);
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
-            int[] NyZ = UtilitiesForRSA.Phi(p, q);
-            int k = UtilitiesForRSA.getFirstCoprime(NyZ[1], 7);
-            PrivateKey = getPrivateKEy(k, NyZ[1], 100);
-            PublicKey[0] = NyZ[0];
-            PublicKey[1] = k;
-            return NyZ[0].ToString() + "," + k.ToString();
+            int N = PublicKey[0] = p * q; //n,e
+            int phi = (p - 1) * (q - 1);
+
+            //
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7*p); //primo relativo entre 1 y phi(n)
+            //e * d = 1 mod(phi(n))
+            int d = PrivateKey = getPrivateKey(phi, e, 7); //n,d
+
+            return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
+        }
+        public static string getPrivateKey()
+        {
+            return PublicKey[0].ToString() + "," + PrivateKey.ToString();
         }
         
-        public static int getPrivateKEy(int k, int z, int length)
-        {    //k* j = 1(mod z) Private key
+        public static int getPrivateKey(int phi, int e, int o)
+        {    
             bool flag = true;
-            int i = 1;
+            int i = o;
              while(flag)
             {
-                if (((k * i) % z) == 1)
+                if ((((e * i) % phi) == 1))
                     return i;
                 i++;
             }
             return 0;
         }
 
-        public static byte Encrypt(byte E)
-        { //P^k = E ( mod n )
-            int P = (Int32)(E);
-            double P2 = (Math.Pow(P, PublicKey[1]));
-            P2 = P2 % PublicKey[0];
-            P = (int) Math.Round(P2);
-            return (byte)P;
+        private static byte Encrypt(byte dat)
+        { //dat^e mod (n)
+            int P = dat;
+            BigInteger P2 = BigInteger.Pow(P, PublicKey[1]);
+            try
+            {
+                do
+                {
+                    P2 %= PublicKey[0];
+                }
+                while (P2 > 255);
+            }
+            catch
+            {
+                return (byte)(P2 - 255);
+            }
+            return (byte)P2;
         }
 
-        private static byte[] Encrypt(byte[] E)
+        public static byte[] Encrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)
             {
@@ -55,13 +81,25 @@ namespace Encryption
             return E;
         }
         
-        public static byte Decrypt(byte E)
-        {//E^j = P (mod n)
-            int P = (Int32)(E);
-            double P2 = Math.Pow(P, PrivateKey);
-            P2 = P2 % PublicKey[0];
-            P = (int)Math.Round(P2);
-            return (byte)P;
+        private static byte Decrypt(byte Dat)
+        {//dat^d mod(n)
+            int P = (Dat);
+            BigInteger P2 = BigInteger.Pow(P, PrivateKey);
+            //do
+            {
+                P2 %= PublicKey[0];
+            }
+            //while (P2 > 255);
+            return (byte)P2;
+        }
+
+        public static byte[] Decrypt(byte[] E)
+        {
+            for (int i = 0; i < E.Length; i++)
+            {
+                E[i] = Decrypt(E[i]);
+            }
+            return E;
         }
     }
     }

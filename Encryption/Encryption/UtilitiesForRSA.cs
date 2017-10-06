@@ -37,16 +37,7 @@ namespace Encryption
             }
             return 3;
         }
-
-        public static int[] Phi(int p, int q)
-        {
-            int[]NyZ = new int[2];
-            NyZ[0] = p * q;
-            NyZ[1] = (p - 1) * (q - 1);
-            return NyZ;
-        }
-
-        private static bool CheckCoprime(int A,int B)
+        public static bool CheckCoprime(int A,int B)
         {
             while (A != 0 && B != 0)
             {
@@ -59,19 +50,31 @@ namespace Encryption
             return Math.Max(A, B) == 1 ? true:false;
 
         }
-
-        public static int getFirstCoprime(int A, int inicial)
+        public static int MCD(int A, int B)
+        {
+            int Resto = A % B;
+            while (Resto != 0)
+            {
+                A = B;
+                B = Resto;
+                Resto = A % B;
+            }
+            return B;
+        }
+        public static int getFirstCoprime(int Z, int inicial)
         {
             bool flag = true;
             int i = inicial;
             while (flag)
-            {
-                if (CheckCoprime(A, i))
+            { 
+               if (CheckCoprime(Z, i))
+              //  if(MCD(Z,i)==1)
                     return i;
                 i++;
             }
             return 0;
         }
+     
 
 
     }
