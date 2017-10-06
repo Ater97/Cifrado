@@ -17,7 +17,7 @@ namespace Encryption
             int p = UtilitiesForRSA.GetPrimeNumber(np);
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
             int[] NyZ = UtilitiesForRSA.Phi(p, q);
-            int k = UtilitiesForRSA.getFirstCoprime(NyZ[1], 50, 100);
+            int k = UtilitiesForRSA.getFirstCoprime(NyZ[1], 7);
             PrivateKey = getPrivateKEy(k, NyZ[1], 100);
             PublicKey[0] = NyZ[0];
             PublicKey[1] = k;
@@ -26,15 +26,18 @@ namespace Encryption
         
         public static int getPrivateKEy(int k, int z, int length)
         {    //k* j = 1(mod z) Private key
-            for (int i = 0; i < length; i++)
+            bool flag = true;
+            int i = 1;
+             while(flag)
             {
                 if (((k * i) % z) == 1)
                     return i;
+                i++;
             }
             return 0;
         }
 
-        private static byte Encrypt(byte E)
+        public static byte Encrypt(byte E)
         { //P^k = E ( mod n )
             int P = (Int32)(E);
             double P2 = (Math.Pow(P, PublicKey[1]));
@@ -43,7 +46,7 @@ namespace Encryption
             return (byte)P;
         }
 
-        public static byte[] Encrypt(byte[] E)
+        private static byte[] Encrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)
             {
@@ -51,5 +54,16 @@ namespace Encryption
             }
             return E;
         }
+        
+        public static byte Decrypt(byte E)
+        {//E^j = P (mod n)
+            int P = (Int32)(E);
+            double P2 = Math.Pow(P, PrivateKey);
+            P2 = P2 % PublicKey[0];
+            P = (int)Math.Round(P2);
+            return (byte)P;
+        }
     }
-}
+    }
+
+

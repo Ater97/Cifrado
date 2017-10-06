@@ -60,12 +60,15 @@ namespace Encryption
 
         }
 
-        public static int getFirstCoprime(int A, int inicial, int final)
+        public static int getFirstCoprime(int A, int inicial)
         {
-            for (int i = inicial; i < final ; i++)
+            bool flag = true;
+            int i = inicial;
+            while (flag)
             {
                 if (CheckCoprime(A, i))
                     return i;
+                i++;
             }
             return 0;
         }
