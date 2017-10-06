@@ -49,7 +49,7 @@ namespace Encryption
             return 0;
         }
 
-        public static byte Encrypt(byte dat)
+        private static byte Encrypt(byte dat)
         { //dat^e mod (n)
             int P = dat;
             BigInteger P2 = BigInteger.Pow(P, PublicKey[1]);
@@ -61,7 +61,7 @@ namespace Encryption
             return (byte)P2;
         }
 
-        private static byte[] Encrypt(byte[] E)
+        public static byte[] Encrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)
             {
@@ -70,7 +70,7 @@ namespace Encryption
             return E;
         }
         
-        public static byte Decrypt(byte Dat)
+        private static byte Decrypt(byte Dat)
         {//dat^d mod(n)
             int P = (Dat);
             BigInteger P2 = BigInteger.Pow(P, PrivateKey);
@@ -82,7 +82,7 @@ namespace Encryption
             return (byte)P2;
         }
 
-        private static byte[] Decrypt(byte[] E)
+        public static byte[] Decrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)
             {

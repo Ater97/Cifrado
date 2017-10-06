@@ -15,10 +15,10 @@ namespace Encryption
             //2 y 5 = 3 y 11
             Console.WriteLine("public key        " + RSA.getPublicKey(6,9));
             byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
-            byte b = (RSA.Encrypt(a[0]));
-            Console.WriteLine("byte encriptado   "+((b).ToString()));
-            Console.WriteLine("caracter decrypt  "+Convert.ToChar(RSA.Decrypt(b)));
-            Console.WriteLine("byte decrypt      "+(RSA.Decrypt(b)).ToString());
+            byte[] b = (RSA.Encrypt(a));
+            Console.WriteLine("byte encriptado   "+(System.Text.Encoding.UTF8.GetString(b)));
+            Console.WriteLine("caracter decrypt  "+ System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
+    
             Console.ReadKey();
             while (!exit)
             {
