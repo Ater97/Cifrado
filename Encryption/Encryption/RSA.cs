@@ -62,6 +62,7 @@ namespace Encryption
             }
             return 0;
         }
+
         #region Int
         public static int EncriptKey(int key)
         {
