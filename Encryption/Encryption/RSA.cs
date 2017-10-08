@@ -9,8 +9,9 @@ namespace Encryption
 {
     static class RSA
     {
-        static int PrivateKey = 0; //n,d
-        static int[] PublicKey = new int[2];//n,e
+        private static int PrivateKey = 0; //n,d
+        private static int[] PublicKey = new int[2];//n,e
+        private static int UserName = 0;
         /*
          *  n = p * q 
          *   Φ(n) = (p - 1) * (q - 1) 
@@ -27,24 +28,33 @@ namespace Encryption
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
             int N = PublicKey[0] = p * q; //n,e
             int phi = (p - 1) * (q - 1);
-
             //
-            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7*p); //primo relativo entre 1 y phi(n)
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7 * p); //primo relativo entre 1 y phi(n)
             //e * d = 1 mod(phi(n))
             int d = PrivateKey = getPrivateKey(phi, e, 7); //n,d
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
+
         public static string getPrivateKey()
         {
             return PublicKey[0].ToString() + "," + PrivateKey.ToString();
+            PrivateKey = 0;
         }
-        
+        public static void setPrivateKey(int key)
+        {
+            PrivateKey = key;
+        }
+        public static void setN(int N)
+        {
+            PublicKey[0] = N;
+        }
+
         public static int getPrivateKey(int phi, int e, int o)
-        {    
+        {
             bool flag = true;
             int i = o;
-             while(flag)
+            while (flag)
             {
                 if ((((e * i) % phi) == 1))
                     return i;
@@ -52,7 +62,22 @@ namespace Encryption
             }
             return 0;
         }
+        #region Int
+        public static int EncriptKey(int key)
+        {
+            BigInteger P2 = BigInteger.Pow(key, PublicKey[1]);
+            P2 %= PublicKey[0];
+            return (int)(P2);
+        }
+        public static int DecryptKey(int Dat)
+        {//dat^d mod(n)
+            BigInteger P2 = BigInteger.Pow(Dat, PrivateKey);
+            P2 %= PublicKey[0];
+            return (int)P2;
+        }
 
+        #endregion
+        #region byte
         private static byte Encrypt(byte dat)
         { //dat^e mod (n)
             int P = dat;
@@ -80,16 +105,16 @@ namespace Encryption
             }
             return E;
         }
-        
+
         private static byte Decrypt(byte Dat)
         {//dat^d mod(n)
             int P = (Dat);
             BigInteger P2 = BigInteger.Pow(P, PrivateKey);
-            //do
+            do
             {
                 P2 %= PublicKey[0];
             }
-            //while (P2 > 255);
+            while (P2 > 255);
             return (byte)P2;
         }
 
@@ -101,7 +126,8 @@ namespace Encryption
             }
             return E;
         }
+        #endregion
     }
-    }
+}
 
 
