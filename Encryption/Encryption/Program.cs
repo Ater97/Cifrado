@@ -15,16 +15,15 @@ namespace Encryption
             //MOCK
             //2 y 5 = 3 y 11
             //5 y 9
-            bool flag = true;
+            /*bool flag = true;
             while (flag)
             {
-                Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
                 byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
                 byte[] b = (RSA.Encrypt(a));
                 Console.WriteLine("byte encriptado   " + (System.Text.Encoding.UTF8.GetString(b)));
                 Console.WriteLine("caracter decrypt  " + System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
                 Console.ReadKey();
-            }
+            }*/
             //************************************************************************************
 
             while (!exit)
@@ -52,8 +51,10 @@ namespace Encryption
             Console.WriteLine("2.2)Press Enter");
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
+            Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
+            Console.WriteLine();
             Console.Write("ENCRYPTOR> ");
-            CommandLine.isCorrectCommand(Console.ReadLine());
+            CommandLine.isCorrectCommand("-c"+" "+"-f"+" "+Console.ReadLine());
         }
     }
 }
