@@ -13,11 +13,10 @@ namespace Encryption
         static void Main(string[] args)
         {
             //MOCK
-            //2 y 5 = 3 y 11
-            //5 y 9
-            /*bool flag = true;
-            while (flag)
+            while (true)
             {
+                //2 y 5 = 3 y 11
+                //5 y 9
                 Console.WriteLine("public key        " + RSA.getPublicKey(50, 96));
                 /*byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
                 byte[] b = (RSA.Encrypt(a));

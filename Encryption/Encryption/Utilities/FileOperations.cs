@@ -42,6 +42,35 @@ namespace Encryption.Utilities
                 throw;
             }
         }
+        #region Essential
+        private static void CreateNewFileC(string completePath, byte[] tempByte) 
+        {
+            FileInfo file = new FileInfo(completePath);
+            string path = file.Directory.ToString();
+            string fileName = Path.GetFileNameWithoutExtension(completePath);
+            string NewFileName = path + "\\" + fileName + ".ENC";
+            FileInfo myFile = new FileInfo(NewFileName + "C");
+            if (File.Exists(NewFileName +"C" ))
+            {
+                myFile.Attributes &= ~FileAttributes.Hidden;
+            }
+            File.WriteAllText(NewFileName + "C", path);
+            myFile.Attributes |= FileAttributes.Hidden;
+            FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
+            fs.Write(tempByte, 0, tempByte.Count());
+            fs.Flush();
+        }
+        static string OriginalExtenssion;
+        static string A;
+        private static void getExtsC(string path) 
+        {
+            FileInfo myFile = new FileInfo(OriginalExtenssion + ".ENCC");
+            myFile.Attributes &= ~FileAttributes.Hidden;
+            A = File.ReadLines(OriginalExtenssion + ".ENCC").ToString();
+            myFile.Attributes |= FileAttributes.Hidden;
+        }
+
+        #endregion
 
     }
 }
