@@ -30,6 +30,19 @@ namespace Encryption.Utilities
             return true;
         }
 
+        public static string CreateNewFileForSDes(string filePath)
+        {
+            FileInfo file = new FileInfo(filePath);
+            string path = file.Directory.ToString();
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string NewFileName = path + "\\" + fileName + ".cif";
+            if (!File.Exists(filePath))
+            {
+                File.Create(NewFileName);
+            }
+            return NewFileName;
+        }
+
         public static bool writeEncryptedData(string filePath,byte [] dataEncrypted)
         {
             try

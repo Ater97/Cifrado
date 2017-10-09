@@ -63,8 +63,7 @@ namespace Encryption.Utilities
                 if (enOrDe == "c" && method == "D")
                 {
                     //SDES Encrypt 
-                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-                    FileOperations.writeEncryptedData(filePath, encryptedData);
+                    SDesProcess.startProcess(filePath);
                     Console.WriteLine("File encrypted successfully!");
                     Console.ReadKey();
                     return true;
