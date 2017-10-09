@@ -45,7 +45,7 @@ namespace Encryption.AES
                     .ToArray();
         }
 
-        public static byte[,] GetSbox()
+        public static byte[,] GetSboxByte()
         {
             return new byte[16, 16] {  // populate the Sbox matrix
     /*       0     1     2     3     4     5     6     7     8     9     a     b     c     d     e     f */
@@ -67,7 +67,44 @@ namespace Encryption.AES
     /*f*/  {0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16} };
 
         }
-
+        public static string[,] GetSboxStr()
+        {
+            byte[,] Sbox = GetSboxByte();
+            string[,] strSbox = new string[16, 16];
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                   strSbox[i,j] = Sbox[i,j].ToString("X");
+                }
+            }
+            return strSbox;
+        }
+        public static List<string> GetSboxLst()
+        {
+            List<string> lstSbox = new List<string>();
+               string[,] Sbox = GetSboxStr();
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    lstSbox.Add(Sbox[i, j]);
+                }
+            }
+            return lstSbox;
+        }
+        public static string exclusiveOR(string strA, string strB)
+        {
+           char[] a = Convert.ToString( int.Parse(strA, System.Globalization.NumberStyles.HexNumber), 2).PadLeft(8,'0').ToArray();
+           char[] b = Convert.ToString( int.Parse(strB, System.Globalization.NumberStyles.HexNumber), 2).PadLeft(8, '0').ToArray();
+       
+            string c = "";
+            for (int i = 0; i < 8; i++)
+            {
+                c += ((Int32)(a[i]) ^ (Int32)(b[i])).ToString();
+            }
+            return Convert.ToInt32(c, 2).ToString("X");
+        }
 
     }
 }
