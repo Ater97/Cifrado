@@ -41,9 +41,9 @@ namespace Encryption.Utilities
                     Console.ReadKey();
                     return false;
                 }
-                //ADD RSA
-              //  byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-               // FileOperations.writeEncryptedData(filePath,encryptedData);
+                //RSA Encrypt
+                byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                FileOperations.writeEncryptedData(filePath,encryptedData);
                 Console.WriteLine("File encrypted successfully!");
                 Console.ReadKey();
                 return true;

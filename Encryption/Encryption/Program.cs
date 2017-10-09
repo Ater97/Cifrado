@@ -29,6 +29,7 @@ namespace Encryption
                 Console.WriteLine("byte encriptado   " + b.ToString());
                 Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
                 Console.ReadKey();
+<<<<<<< HEAD
             }
             #endregion 
             #region AES MOCK
@@ -41,6 +42,9 @@ namespace Encryption
             }
             #endregion
 
+=======
+            }*/
+>>>>>>> origin/master
             //************************************************************************************
 
             while (!exit)
@@ -68,8 +72,10 @@ namespace Encryption
             Console.WriteLine("2.2)Press Enter");
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
+            Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
+            Console.WriteLine();
             Console.Write("ENCRYPTOR> ");
-            CommandLine.isCorrectCommand(Console.ReadLine());
+            CommandLine.isCorrectCommand("-c"+" "+"-f"+" "+Console.ReadLine());
         }
     }
 }
