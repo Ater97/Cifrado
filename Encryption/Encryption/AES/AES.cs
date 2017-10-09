@@ -19,7 +19,7 @@ namespace Encryption.AES
             string[][] KEYS = UtilitiesForAES.getKEY(strkey);
             KEYS = Roundkey(KEYS);
         }
-        public static string[][][] GetData(string [][]DATA)
+        public static string[][][] GetData(string[][] DATA)
         {
             string[][][] Blocks = new string[DATA.Length][][];
             for (int i = 0; i < DATA.Length; i++)
@@ -40,9 +40,11 @@ namespace Encryption.AES
             string temp = KEYA[3][0];
             for (int i = 0; i < 3; i++)
             {
-                KEYA[3][i] = KEYA[3][i + 1];   
+                KEYA[3][i] = KEYA[3][i + 1];
             }
             KEYA[3][3] = temp;
+
+
 
             return KEYA;
         }

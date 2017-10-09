@@ -29,7 +29,6 @@ namespace Encryption
                 Console.WriteLine("byte encriptado   " + b.ToString());
                 Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
                 Console.ReadKey();
-<<<<<<< HEAD
             }
             #endregion 
             #region AES MOCK
@@ -41,10 +40,6 @@ namespace Encryption
                 AES.AES.Encrypt("Thats my Kung Fu");
             }
             #endregion
-
-=======
-            }*/
->>>>>>> origin/master
             //************************************************************************************
 
             while (!exit)
