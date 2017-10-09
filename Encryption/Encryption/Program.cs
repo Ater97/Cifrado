@@ -32,12 +32,12 @@ namespace Encryption
             }
             #endregion 
             #region AES MOCK
-            while (true)
+            while (false)
             {
                 string path = "C:\\Users\\sebas\\Desktop\\Test.txt";
                 //UtilitiesForAES.getBlocks(FileOperations.getFileBytes(path)); // return List<List<byte>>
-                UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
-                AES.AES.Encrypt("Thats my Kung Fu");
+                /*UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
+                AES.AES.Encrypt("Thats my Kung Fu");*/
             }
             #endregion
             //************************************************************************************
@@ -68,9 +68,24 @@ namespace Encryption
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
             Console.WriteLine("public key        " + RSA.getPublicKey(5, 9));
-            Console.WriteLine();
-            Console.Write("ENCRYPTOR> ");
-            CommandLine.isCorrectCommand("-c"+" "+"-f"+" "+Console.ReadLine());
+            Console.Write("METHOD> ");
+            string method = Console.ReadLine();
+            if (method == "R" || method == "r")
+            {
+                Console.Write("ENCRYPTOR> ");
+                CommandLine.isCorrectCommand("-c" + " " + "-f" + " " + Console.ReadLine(), "R");
+                return;
+            }
+            if (method == "S" || method == "s")
+            {
+                Console.Write("ENCRYPTOR> ");
+                CommandLine.isCorrectCommand("-c" + " " + "-f" + " " + Console.ReadLine(), "D");
+                return;
+            }
+            Console.WriteLine("Incorrect method!");
+            Console.ReadKey();
+            Console.Clear();
+            menu();
         }
     }
 }

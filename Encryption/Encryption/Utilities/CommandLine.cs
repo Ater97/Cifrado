@@ -9,7 +9,7 @@ namespace Encryption.Utilities
 {
     static class CommandLine
     {
-        public static bool isCorrectCommand(string command)
+        public static bool isCorrectCommand(string command, string method)
         {
             string[] commands = command.Split(' ');
             string[] newCommands = new string[3];
@@ -24,14 +24,14 @@ namespace Encryption.Utilities
                 newCommands[0] = commands[0];
                 newCommands[1] = commands[1];
                 newCommands[2] = filePath;
-                return isEncrypting(newCommands);
+                return isEncrypting(newCommands, method);
             }
             if (commands.Length > 3) return false;
-            return isEncrypting(commands);
+            return isEncrypting(commands, method);
             
         }
 
-        private static bool fileExist(string command, string filePath)
+        private static bool fileExist(string command, string filePath, string method, string enOrDe)
         {
             if (command == "-f" || command == "-F")
             {
@@ -42,30 +42,61 @@ namespace Encryption.Utilities
                     return false;
                 }
                 //RSA Encrypt
-                byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-                FileOperations.writeEncryptedData(filePath,encryptedData);
-                Console.WriteLine("File encrypted successfully!");
-                Console.ReadKey();
-                return true;
+                if (enOrDe == "c" && method == "R")
+                {
+                    //RSA Encrypt
+                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                    FileOperations.writeEncryptedData(filePath, encryptedData);
+                    Console.WriteLine("File encrypted successfully!");
+                    Console.ReadKey();
+                    return true; 
+                }
+                if (enOrDe == "d" && method == "R")
+                {
+                    //RSA Decrypt 
+                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                    FileOperations.writeEncryptedData(filePath, encryptedData);
+                    Console.WriteLine("File encrypted successfully!");
+                    Console.ReadKey();
+                    return true;
+                }
+                if (enOrDe == "c" && method == "D")
+                {
+                    //SDES Encrypt 
+                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                    FileOperations.writeEncryptedData(filePath, encryptedData);
+                    Console.WriteLine("File encrypted successfully!");
+                    Console.ReadKey();
+                    return true;
+                }
+                if (enOrDe == "d" && method == "D")
+                {
+                    //SDES Decrypt 
+                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                    FileOperations.writeEncryptedData(filePath, encryptedData);
+                    Console.WriteLine("File encrypted successfully!");
+                    Console.ReadKey();
+                    return true;
+                }
             }
             Console.WriteLine("ERROR -f command is missing!");
             Console.ReadKey();
             return false;
         }
 
-        private static bool isEncrypting(string [] commands)
+        private static bool isEncrypting(string[] commands, string method)
         {
-            if (commands[0] == "-c" || commands[0] == "-C")
-            {
-                return fileExist(commands[1], commands[2]);
+            if (commands[0] == "-c" || commands[0] == "-C") { 
+                return fileExist(commands[1], commands[2], method, "c");
             }
-            if (commands[0] == "-d" || commands[0] == "-D")
-            {
-                return fileExist(commands[1], commands[2]);
+
+            if (commands[0] == "-d" || commands[0] == "-D"){
+                return fileExist(commands[1], commands[2], method,"d");
             }
             Console.WriteLine("ERROR -c or -d command is missing!");
             Console.ReadKey();
             return false;
+
         }
     }
 }
