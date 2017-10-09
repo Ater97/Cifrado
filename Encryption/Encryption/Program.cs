@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Encryption.Utilities;
+using Encryption.AES;
 
 namespace Encryption
 {
@@ -12,8 +13,8 @@ namespace Encryption
         static bool exit = false;
         static void Main(string[] args)
         {
-            //MOCK
-            while (true)
+            #region RSA MOCK
+            while (false)
             {
                 //2 y 5 = 3 y 11
                 //5 y 9
@@ -29,6 +30,17 @@ namespace Encryption
                 Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
                 Console.ReadKey();
             }
+            #endregion 
+            #region AES MOCK
+            while (true)
+            {
+                string path = "C:\\Users\\sebas\\Desktop\\Test.txt";
+                //UtilitiesForAES.getBlocks(FileOperations.getFileBytes(path)); // return List<List<byte>>
+                UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
+                AES.AES.Encrypt("Thats my Kung Fu");
+            }
+            #endregion
+
             //************************************************************************************
 
             while (!exit)
