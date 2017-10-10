@@ -77,7 +77,7 @@ namespace Encryption.Utilities
             fs.Write(tempByte, 0, tempByte.Count());
             fs.Flush();*/
         }
-        public static string getExtsC() 
+        public static string getExtsC(string OriginalExtenssion) 
         {
             FileInfo myFile = new FileInfo(OriginalExtenssion + ".cifC");
             myFile.Attributes &= ~FileAttributes.Hidden;
