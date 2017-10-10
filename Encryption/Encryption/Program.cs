@@ -36,8 +36,8 @@ namespace Encryption
             {
                 string path = "C:\\Users\\sebas\\Desktop\\Test.txt";
                 //UtilitiesForAES.getBlocks(FileOperations.getFileBytes(path)); // return List<List<byte>>
-                /*UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
-                AES.AES.Encrypt("Thats my Kung Fu");*/
+                UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
+                AES.AES.Encrypt("Thats my Kung Fu");
             }
             #endregion
             //************************************************************************************

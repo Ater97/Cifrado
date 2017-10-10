@@ -46,10 +46,15 @@ namespace Encryption
             }
             string newPath = FileOperations.CreateNewFileForSDes(filePath);
             File.WriteAllLines(newPath,newDatos);
+
+            #region Ghost
+            FileOperations.CreateNewFileC(filePath);
+            #endregion
         }
 
         public static void DecryptAllData(string filePath)
         {
+            FileOperations.getExtsC(filePath); // **return string original path**
             /*
             string[] data = File.ReadAllLines(newPath);
             string[] dataDecrypted = new string[data.Length];
