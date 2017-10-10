@@ -23,7 +23,7 @@ namespace Encryption.Utilities
                 }
                 newCommands[0] = commands[0];
                 newCommands[1] = commands[1];
-                newCommands[2] = filePath;
+                newCommands[2] = commands[commands.Length - 1];
                 return isEncrypting(newCommands, method);
             }
             if (commands.Length > 3) return false;

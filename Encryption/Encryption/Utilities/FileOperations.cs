@@ -56,31 +56,34 @@ namespace Encryption.Utilities
             }
         }
         #region Essential
-        private static void CreateNewFileC(string completePath, byte[] tempByte) 
+        static string OriginalExtenssion;
+        static string A;
+        public static void CreateNewFileC(string completePath) 
         {
             FileInfo file = new FileInfo(completePath);
             string path = file.Directory.ToString();
             string fileName = Path.GetFileNameWithoutExtension(completePath);
-            string NewFileName = path + "\\" + fileName + ".ENC";
+            string Extension = Path.GetExtension(completePath);
+            string Name = Path.GetFileName(completePath);
+            string NewFileName = path + "\\" + fileName + ".cif";
             FileInfo myFile = new FileInfo(NewFileName + "C");
             if (File.Exists(NewFileName +"C" ))
             {
                 myFile.Attributes &= ~FileAttributes.Hidden;
             }
-            File.WriteAllText(NewFileName + "C", path);
+            File.WriteAllText(NewFileName + "C", Name + "." + Extension);
             myFile.Attributes |= FileAttributes.Hidden;
-            FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
+           /* FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
             fs.Write(tempByte, 0, tempByte.Count());
-            fs.Flush();
+            fs.Flush();*/
         }
-        static string OriginalExtenssion;
-        static string A;
-        private static void getExtsC(string path) 
+        public static string getExtsC() 
         {
-            FileInfo myFile = new FileInfo(OriginalExtenssion + ".ENCC");
+            FileInfo myFile = new FileInfo(OriginalExtenssion + ".cifC");
             myFile.Attributes &= ~FileAttributes.Hidden;
-            A = File.ReadLines(OriginalExtenssion + ".ENCC").ToString();
+            A = File.ReadLines(OriginalExtenssion + ".cifC").ToString();
             myFile.Attributes |= FileAttributes.Hidden;
+            return A;
         }
 
         #endregion
