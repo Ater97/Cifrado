@@ -43,6 +43,18 @@ namespace Encryption.Utilities
             return NewFileName;
         }
 
+        public static void CreateNewFileForSDesDencryption(string filePath, string extention)
+        {
+            FileInfo file = new FileInfo(filePath);
+            string path = file.Directory.ToString();
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string NewFileName = path + "\\" + fileName + extention;
+            if (!File.Exists(filePath))
+            {
+                File.Create(NewFileName);
+            }
+        }
+
         public static bool writeEncryptedData(string filePath,byte [] dataEncrypted)
         {
             try

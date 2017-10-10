@@ -17,7 +17,7 @@ namespace Encryption
             try
             {
                 key = int.Parse(s: Console.ReadLine());
-                key = RSA.EncriptKEYint(key);
+                //key = RSA.EncriptKEYint(key);
             }
             catch (FormatException)
             {
@@ -54,14 +54,43 @@ namespace Encryption
 
         public static void DecryptAllData(string filePath)
         {
-            FileOperations.getExtsC(filePath); // **return string original path**
-            Console.WriteLine("Enter your personal key");
+            SDesAlgorithm sDes = new SDesAlgorithm();
+            var ext = FileOperations.getExtsC(filePath); // **return string original path**
+            Console.WriteLine("Please type the K1 key generated when encrypt!");
+            var k1 = Console.ReadLine();
+            Console.WriteLine("Please type the K2 key generated when encrypt!");
+            var k2 = Console.ReadLine();
+            IList<byte> k_2 = null;
+            IList<byte> k_1 = null;
+            try
+            {
+                SDesAlgorithm SDes = new SDesAlgorithm();
+                k_1 = SDes.StringToBytes(k1);
+                k_2 = SDes.StringToBytes(k2);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Please enter a k1 or k2 correct!");
+                Console.ReadKey();
+                DecryptAllData(filePath);
+            }
+            string[] data = File.ReadAllLines(filePath);
+            FileOperations.CreateNewFileForSDesDencryption(Path.GetFileNameWithoutExtension(filePath), ext);
+            string[] dataDecrypted = new string[data.Length];
+            for (int i = 0; i < data.Length; i++)
+            {
+                var o = DecriptText(sDes, data[i], k_1, k_2);
+                dataDecrypted[i] = o;
+            }
+            File.WriteAllLines(filePath+ext, dataDecrypted);
+
+            /*Console.WriteLine("Enter your personal key");
             int Key = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter the key provided by the system");
             int privateKey = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter the public key");
             int N = int.Parse(Console.ReadLine());
-            RSA.DecriptKEYint(Key, privateKey, N);
+            RSA.DecriptKEYint(Key, privateKey, N);*/
             /*
             string[] data = File.ReadAllLines(newPath);
             string[] dataDecrypted = new string[data.Length];
