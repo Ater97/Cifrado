@@ -28,7 +28,6 @@ namespace Encryption.Utilities
             }
             if (commands.Length > 3) return false;
             return isEncrypting(commands, method);
-            
         }
 
         private static bool fileExist(string command, string filePath, string method, string enOrDe)
@@ -65,16 +64,22 @@ namespace Encryption.Utilities
                     //SDES Encrypt 
                     SDesProcess.startProcess(filePath);
                     Console.WriteLine("File encrypted successfully!");
-                    Console.ReadKey();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Before to continue be sure to save the k1 and k2 to decrypt later!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    /*byte[] bytes = FileOperations.getFileBytes(filePath);
+                    List<byte> listaEncriptada = SDesProcess.getList(bytes);*/
+                    //SDesProcess.startProcess(filePath);
                     return true;
                 }
                 if (enOrDe == "d" && method == "D")
                 {
                     //SDES Decrypt 
-                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
+                    /*byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
                     FileOperations.writeEncryptedData(filePath, encryptedData);
                     Console.WriteLine("File encrypted successfully!");
-                    Console.ReadKey();
+                    Console.ReadKey();*/
+                    SDesProcess.DecryptAllData(filePath);
                     return true;
                 }
             }

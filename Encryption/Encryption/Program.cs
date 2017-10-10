@@ -52,11 +52,9 @@ namespace Encryption
 
         private static void menu()
         {
-            Console.WriteLine("                                           Welcome to RSA and SDES ENCRYPTOR V 1.1");
+            Console.WriteLine("                                             Welcome to SDES ENCRYPTOR V 1.1");
             Console.WriteLine("                                                    -INSTRUCTIONS-");
             Console.WriteLine();
-            Console.WriteLine("The first step is to select a encrypt method, type R for RSA or S for SDES.");
-            Console.WriteLine("Once you have selected the method, follow these steps:");
             Console.WriteLine();
             Console.WriteLine("1) Encrypt: To encrypt a file follow these steps:");
             Console.WriteLine("1.1)Write in ENCRYPTOR level: -c -f (directory where the file is saved)");
@@ -69,21 +67,8 @@ namespace Encryption
             Console.WriteLine("2.2)Press Enter");
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
-            Console.Write("METHOD> ");
-            string method = Console.ReadLine();
-            if (method == "R" || method == "r")
-            {
-                Console.Write("ENCRYPTOR> ");
-                CommandLine.isCorrectCommand("-c" + " " + "-f" + " " + Console.ReadLine(), "R");
-                return;
-            }
-            if (method == "S" || method == "s")
-            {
-                Console.Write("ENCRYPTOR> ");
-                CommandLine.isCorrectCommand("-c" + " " + "-f" + " " + Console.ReadLine(), "D");
-                return;
-            }
-            Console.WriteLine("Incorrect method!");
+            Console.Write("ENCRYPTOR> ");
+            CommandLine.isCorrectCommand("-c" + " " + "-f" + " " + Console.ReadLine(), "D");
             Console.ReadKey();
             Console.Clear();
             menu();

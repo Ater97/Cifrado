@@ -262,6 +262,24 @@ namespace Encryption
             return xor2;
         }
 
+        public List<byte> Encript(byte [] bytesToEncript)
+        {
+            IList<byte> bytes = bytesToEncript.ToList<byte>();
+
+            var ip = ToIP(bytes);
+
+            var fk1 = Fk(ip, k1);
+
+            var sw = SW(fk1, ip.Skip(4).Take(4).ToList());
+
+            var fk2 = Fk(sw, k2);
+
+            var sw2 = SW(fk1, fk2);
+
+            var ip_1 = ToIP_1(sw2);
+            return ip.ToList<byte>();
+        }
+
         public string Encript(string symbol)
         {
             IList<byte> bytes = StringToBytes(symbol);

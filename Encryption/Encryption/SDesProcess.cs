@@ -12,7 +12,6 @@ namespace Encryption
     {
         public static void startProcess(string filePath)
         {
-            Console.Clear();
             Console.WriteLine("Enter Key:");
             int key = 0;
             try
@@ -36,6 +35,7 @@ namespace Encryption
                 startProcess(filePath);
             }
             Console.WriteLine("");
+            
             string[] datos = File.ReadAllLines(filePath);
             string[] newDatos = new string[datos.Length];
             List<byte> dataToWrite = new List<byte>();
@@ -50,15 +50,7 @@ namespace Encryption
 
         public static void DecryptAllData(string filePath)
         {
-            /*
-            string[] data = File.ReadAllLines(newPath);
-            string[] dataDecrypted = new string[data.Length];
-            for (int i = 0; i < data.Length; i++)
-            {
-                var o = DecriptText(sDes, data[i], k1, k2);
-                dataDecrypted[i] = o;
-            }
-            File.WriteAllLines(filePath, dataDecrypted);*/
+            
         }
 
         private static bool GenerateKeys(int key, SDesAlgorithm sDes, out IList<byte> k1, out IList<byte> k2)
@@ -88,6 +80,12 @@ namespace Encryption
             return false;
         }
 
+        public static List<byte> getList(byte [] bytes)
+        {
+            SDesAlgorithm sdes = new SDesAlgorithm();
+            return sdes.Encript(bytes);
+        }
+
         private static string EncriptText(SDesAlgorithm sDes, string text, IList<byte> k1, IList<byte> k2)
         {
             var str = string.Empty;
@@ -98,6 +96,8 @@ namespace Encryption
             }
             return str;
         }
+
+        
         private static string DecriptText(SDesAlgorithm sDes, string text, IList<byte> k1, IList<byte> k2)
         {
             var str = string.Empty;
