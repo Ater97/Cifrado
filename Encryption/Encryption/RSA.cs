@@ -64,6 +64,22 @@ namespace Encryption
         }
 
         #region Int
+
+        public static int EncriptKEYint(int key)
+        {
+            string keys = "Public key: " + getPublicKey(key, key * key) + Environment.NewLine;
+            keys += "Private key :" + getPrivateKey();
+            Console.WriteLine(keys);
+            return EncriptKey(key);
+        }
+
+        public static int DecriptKEYint(int key, int privateKEY, int N)
+        {
+            setN(N);
+            setPrivateKey(privateKEY);
+            return DecryptKey(key);
+        }
+
         public static int EncriptKey(int key)
         {
             BigInteger P2 = BigInteger.Pow(key, PublicKey[1]);

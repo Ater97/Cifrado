@@ -18,7 +18,7 @@ namespace Encryption
             try
             {
                 key = int.Parse(s: Console.ReadLine());
-
+                key = RSA.EncriptKEYint(key);
             }
             catch (FormatException)
             {
@@ -55,6 +55,13 @@ namespace Encryption
         public static void DecryptAllData(string filePath)
         {
             FileOperations.getExtsC(filePath); // **return string original path**
+            Console.WriteLine("Enter your personal key");
+            int Key = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the key provided by the system");
+            int privateKey = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the public key");
+            int N = int.Parse(Console.ReadLine());
+            RSA.DecriptKEYint(Key, privateKey, N);
             /*
             string[] data = File.ReadAllLines(newPath);
             string[] dataDecrypted = new string[data.Length];
