@@ -68,7 +68,7 @@ namespace Encryption
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
             Console.Write("ENCRYPTOR> ");
-            CommandLine.isCorrectCommand("-d" + " " + "-f" + " " + Console.ReadLine(), "D");
+            CommandLine.isCorrectCommand(Console.ReadLine(), "D");
             Console.ReadKey();
             Console.Clear();
             menu();

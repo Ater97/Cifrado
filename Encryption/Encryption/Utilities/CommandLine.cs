@@ -80,6 +80,7 @@ namespace Encryption.Utilities
                     Console.WriteLine("File encrypted successfully!");
                     Console.ReadKey();*/
                     SDesProcess.DecryptAllData(filePath);
+                    Console.WriteLine("File decrypted successfully!");
                     return true;
                 }
             }

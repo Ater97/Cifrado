@@ -43,7 +43,7 @@ namespace Encryption.Utilities
             return NewFileName;
         }
 
-        public static void CreateNewFileForSDesDencryption(string filePath, string extention)
+        public static string CreateNewFileForSDesDencryption(string filePath, string extention)
         {
             FileInfo file = new FileInfo(filePath);
             string path = file.Directory.ToString();
@@ -53,6 +53,7 @@ namespace Encryption.Utilities
             {
                 File.Create(NewFileName);
             }
+            return NewFileName;
         }
 
         public static bool writeEncryptedData(string filePath,byte [] dataEncrypted)
@@ -68,7 +69,16 @@ namespace Encryption.Utilities
             }
         }
         #region Essential
-        public static void CreateNewFileC(string completePath) 
+
+        public static int getKey(string OriginalExtenssion)
+        {
+            FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
+            myFile.Attributes &= ~FileAttributes.Hidden;
+            string[] A = File.ReadAllLines(OriginalExtenssion + "C");
+            var key = int.Parse(A[1]);
+            return key;
+        }
+        public static void CreateNewFileC(string completePath, int key) 
         {
             try
             {
@@ -83,7 +93,11 @@ namespace Encryption.Utilities
                 {
                     myFile.Attributes &= ~FileAttributes.Hidden;
                 }
-                File.WriteAllText(NewFileName + "C", Name);
+                string[] dataToWrite = new string[2];
+                dataToWrite[0] = Name;
+                dataToWrite[1] = key.ToString();
+                File.WriteAllLines(NewFileName+"C", dataToWrite);
+                //File.WriteAllText(NewFileName + "C", Name);
                 myFile.Attributes |= FileAttributes.Hidden;
             }
             catch
@@ -100,9 +114,23 @@ namespace Encryption.Utilities
             {
                 FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
                 myFile.Attributes &= ~FileAttributes.Hidden;
-                string A = File.ReadLines(OriginalExtenssion + "C").First(); ;
+                string[] A = File.ReadAllLines(OriginalExtenssion+"C");
+                var extention = A[0];
+                //string A = File.ReadLines(OriginalExtenssion + "C").First();
                 myFile.Attributes |= FileAttributes.Hidden;
-                return A;
+                var ext = string.Empty;
+                for (int i = 0; i < extention.Length; i++)
+                {
+                    if (extention[i].Equals('.'))
+                    {
+                        for (int j = i; j < extention.Length; j++)
+                        {
+                            ext += extention[j];
+                        }
+                        return ext;
+                    }
+                }
+                return A[0];
             }
             catch
             {

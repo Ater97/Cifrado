@@ -324,7 +324,7 @@ namespace Encryption
             var dec = Convert.ToInt32(stringBin, 2);
             var a = Encoding.GetEncoding("cp866");
             var text = a.GetString(new[] { (byte)dec });
-            Console.WriteLine(" result='{2}'", symbol, string.Join(string.Empty, bytes), stringBin);
+            //Console.WriteLine(" result='{2}'", symbol, string.Join(string.Empty, bytes), stringBin);
             return text;
         }
 

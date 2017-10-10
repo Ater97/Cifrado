@@ -48,7 +48,7 @@ namespace Encryption
             File.WriteAllLines(newPath,newDatos);
 
             #region Ghost
-            FileOperations.CreateNewFileC(filePath);
+            FileOperations.CreateNewFileC(filePath,key);
             #endregion
         }
 
@@ -56,34 +56,23 @@ namespace Encryption
         {
             SDesAlgorithm sDes = new SDesAlgorithm();
             var ext = FileOperations.getExtsC(filePath); // **return string original path**
+            var key = FileOperations.getKey(filePath);
             Console.WriteLine("Please type the K1 key generated when encrypt!");
-            var k1 = Console.ReadLine();
+            var k_1 = Console.ReadLine();
             Console.WriteLine("Please type the K2 key generated when encrypt!");
-            var k2 = Console.ReadLine();
-            IList<byte> k_2 = null;
-            IList<byte> k_1 = null;
-            try
-            {
-                SDesAlgorithm SDes = new SDesAlgorithm();
-                k_1 = SDes.StringToBytes(k1);
-                k_2 = SDes.StringToBytes(k2);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Please enter a k1 or k2 correct!");
-                Console.ReadKey();
-                DecryptAllData(filePath);
-            }
+            var k_2 = Console.ReadLine();
+            IList<byte> k1;
+            IList<byte> k2;
+            GenerateKeysGhost(key, sDes, out k1, out k2);
             string[] data = File.ReadAllLines(filePath);
-            FileOperations.CreateNewFileForSDesDencryption(Path.GetFileNameWithoutExtension(filePath), ext);
+            string newFileName = FileOperations.CreateNewFileForSDesDencryption(filePath, ext);
             string[] dataDecrypted = new string[data.Length];
             for (int i = 0; i < data.Length; i++)
             {
-                var o = DecriptText(sDes, data[i], k_1, k_2);
+                var o = DecriptText(sDes, data[i], k1, k2);
                 dataDecrypted[i] = o;
             }
-            File.WriteAllLines(filePath+ext, dataDecrypted);
-
+            File.WriteAllLines(newFileName, dataDecrypted);
             /*Console.WriteLine("Enter your personal key");
             int Key = int.Parse(Console.ReadLine());
             Console.WriteLine("Enter the key provided by the system");
@@ -100,6 +89,28 @@ namespace Encryption
                 dataDecrypted[i] = o;
             }
             File.WriteAllLines(filePath, dataDecrypted);*/
+        }
+
+        private static bool GenerateKeysGhost(int key, SDesAlgorithm sDes, out IList<byte> k1, out IList<byte> k2)
+        {
+            sDes.GenerateKeys(key);
+            var bytes = sDes.DecToBytes(key);
+            k1 = null;
+            k2 = null;
+            if (bytes.Count != 0)
+            {
+                bytes = sDes.ToP10(bytes);
+
+                bytes = sDes.CyclicShift_One(bytes);
+
+                k1 = sDes.ToP8(bytes);
+
+                bytes = sDes.CyclicShift_Two(bytes);
+
+                k2 = sDes.ToP8(bytes);
+                return true;
+            }
+            return false;
         }
 
         private static bool GenerateKeys(int key, SDesAlgorithm sDes, out IList<byte> k1, out IList<byte> k2)
@@ -149,6 +160,8 @@ namespace Encryption
         
         private static string DecriptText(SDesAlgorithm sDes, string text, IList<byte> k1, IList<byte> k2)
         {
+            sDes.k1 = k1;
+            sDes.k2 = k2;
             var str = string.Empty;
             for (var i = 0; i < text.Length; i++)
             {
