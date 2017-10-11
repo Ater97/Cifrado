@@ -34,7 +34,7 @@ namespace Encryption
             Console.WriteLine("1.4)Search your file in the same directory with .cif at the end.");
             Console.WriteLine();
             Console.WriteLine("2) Deencrypt: To dencrypt a file follow these steps:");
-            Console.WriteLine("2.1)Write in ENCRYPTOR level: -d -f (directory where the file is saved).comp");
+            Console.WriteLine("2.1)Write in ENCRYPTOR level: -d -f (directory where the file is saved).cif");
             Console.WriteLine("2.2)Press Enter");
             Console.WriteLine("2.3)Search your file in the same directory with the original extension at the start.");
             Console.WriteLine();
