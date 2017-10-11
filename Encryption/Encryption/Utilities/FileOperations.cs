@@ -16,7 +16,6 @@ namespace Encryption.Utilities
             lecturaBinaria.Close();
             return bytes;
         }
-
         private static bool CreateNewFile(string filePath, byte[] tempByte)
         {
             FileInfo file = new FileInfo(filePath);
@@ -29,7 +28,6 @@ namespace Encryption.Utilities
             fs.Flush();
             return true;
         }
-
         public static string CreateNewFileForSDes(string filePath)
         {
             FileInfo file = new FileInfo(filePath);
@@ -42,7 +40,6 @@ namespace Encryption.Utilities
             }
             return NewFileName;
         }
-
         public static string CreateNewFileForSDesDencryption(string filePath, string extention)
         {
             FileInfo file = new FileInfo(filePath);
@@ -55,7 +52,6 @@ namespace Encryption.Utilities
             }
             return NewFileName;
         }
-
         public static bool writeEncryptedData(string filePath,byte [] dataEncrypted)
         {
             try
@@ -69,8 +65,6 @@ namespace Encryption.Utilities
             }
         }
         #region Essential
-
-       
         public static void CreateNewFileC(string completePath) 
         {
             try
@@ -110,7 +104,6 @@ namespace Encryption.Utilities
                 return null;
             }
         }
-
         #endregion
 
     }

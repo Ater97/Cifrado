@@ -13,35 +13,6 @@ namespace Encryption
         static bool exit = false;
         static void Main(string[] args)
         {
-            #region RSA MOCK
-            while (false)
-            {
-                //2 y 5 = 3 y 11
-                //5 y 9
-                Console.WriteLine("public key        " + RSA.getPublicKey(50, 96));
-                /*byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
-                byte[] b = (RSA.Encrypt(a));
-                Console.WriteLine("byte encriptado   " + (System.Text.Encoding.UTF8.GetString(b)));
-                Console.WriteLine("caracter decrypt  " + System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
-                */
-                int a = (int.Parse(Console.ReadLine()));
-                int b = RSA.EncriptKey(a);
-                Console.WriteLine("byte encriptado   " + b.ToString());
-                Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
-                Console.ReadKey();
-            }
-            #endregion 
-            #region AES MOCK
-            while (false)
-            {
-                string path = "C:\\Users\\sebas\\Desktop\\Test.txt";
-                //UtilitiesForAES.getBlocks(FileOperations.getFileBytes(path)); // return List<List<byte>>
-                UtilitiesForAES.getHexa(FileOperations.getFileBytes(path)); //return List<List<string>>
-                AES.AES.Encrypt("Thats my Kung Fu");
-            }
-            #endregion
-            //************************************************************************************
-
             while (!exit)
             {
                 Console.Clear();

@@ -29,7 +29,6 @@ namespace Encryption.Utilities
             if (commands.Length > 3) return false;
             return isEncrypting(commands, method);
         }
-
         private static bool fileExist(string command, string filePath, string method, string enOrDe)
         {
             if (command == "-f" || command == "-F")
@@ -40,25 +39,7 @@ namespace Encryption.Utilities
                     Console.ReadKey();
                     return false;
                 }
-                //RSA Encrypt
-                if (enOrDe == "c" && method == "R")
-                {
-                    //RSA Encrypt
-                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-                    FileOperations.writeEncryptedData(filePath, encryptedData);
-                    Console.WriteLine("File encrypted successfully!");
-                    Console.ReadKey();
-                    return true; 
-                }
-                if (enOrDe == "d" && method == "R")
-                {
-                    //RSA Decrypt 
-                    byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-                    FileOperations.writeEncryptedData(filePath, encryptedData);
-                    Console.WriteLine("File encrypted successfully!");
-                    Console.ReadKey();
-                    return true;
-                }
+                //SDes Encrypt
                 if (enOrDe == "c" && method == "D")
                 {
                     //SDES Encrypt 
@@ -67,18 +48,10 @@ namespace Encryption.Utilities
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Please remember your key and the private key to decrypt!");
                     Console.ForegroundColor = ConsoleColor.White;
-                    /*byte[] bytes = FileOperations.getFileBytes(filePath);
-                    List<byte> listaEncriptada = SDesProcess.getList(bytes);*/
-                    //SDesProcess.startProcess(filePath);
                     return true;
                 }
                 if (enOrDe == "d" && method == "D")
                 {
-                    //SDES Decrypt 
-                    /*byte[] encryptedData = RSA.Encrypt(FileOperations.getFileBytes(filePath));
-                    FileOperations.writeEncryptedData(filePath, encryptedData);
-                    Console.WriteLine("File encrypted successfully!");
-                    Console.ReadKey();*/
                     SDesProcess.DecryptAllData(filePath);
                     Console.WriteLine("File decrypted successfully!");
                     return true;
@@ -88,7 +61,6 @@ namespace Encryption.Utilities
             Console.ReadKey();
             return false;
         }
-
         private static bool isEncrypting(string[] commands, string method)
         {
             try

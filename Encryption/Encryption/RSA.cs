@@ -12,16 +12,6 @@ namespace Encryption
         private static int PrivateKey = 0; //n,d
         private static int[] PublicKey = new int[2];//n,e
         private static int UserName = 0;
-        /*
-         *  n = p * q 
-         *   Φ(n) = (p - 1) * (q - 1) 
-         *    1 < e < Φ(n) 
-         *     d = inv(e, Φ(n)) ⇒ mcd[e, Φ(n)] = 1
-         *     (n, d) ⇒ Clave privada 
-         *      (n, e) ⇒ Clave pública
-
-         */
-
         public static string getPublicKey(int np, int nq) // n prime number
         {
             int p = UtilitiesForRSA.GetPrimeNumber(np);
@@ -30,13 +20,10 @@ namespace Encryption
             int phi = (p - 1) * (q - 1);
             //
             int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7); //primo relativo entre 1 y phi(n)
-            //e * d = 1 mod(phi(n))
-         //   if (UserName > 1000) UserName = 1;
             int d = PrivateKey = getPrivateKey(phi, e, 7 * UserName); //n,d
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
-
         public static string getPrivateKey()
         {
             return PublicKey[0].ToString() + "," + PrivateKey.ToString();
@@ -50,7 +37,6 @@ namespace Encryption
         {
             PublicKey[0] = N;
         }
-
         public static int getPrivateKey(int phi, int e, int o)
         {
             bool flag = true;
@@ -63,19 +49,15 @@ namespace Encryption
             }
             return 0;
         }
-
-        //******************************
         public static int EncriptKEYint(int key, int user)
         {
             UserName = user;
             getPublicKey(9, 15);
-            //string keys = "Public key: " + getPublicKey(p, q) + Environment.NewLine;
             string keys = "Private key :" + PrivateKey.ToString() + Environment.NewLine;
             PrivateKey = 0;
             Console.WriteLine(keys);
             return EncriptKey(key);
         }
-
         public static int DecriptKEYint(int key, int privateKEY, int N, int user)
         {
             setN(N);
@@ -119,7 +101,6 @@ namespace Encryption
             }
             return (byte)P2;
         }
-
         public static byte[] Encrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)
@@ -128,7 +109,6 @@ namespace Encryption
             }
             return E;
         }
-
         private static byte Decrypt(byte Dat)
         {//dat^d mod(n)
             int P = (Dat);
@@ -140,7 +120,6 @@ namespace Encryption
             while (P2 > 255);
             return (byte)P2;
         }
-
         public static byte[] Decrypt(byte[] E)
         {
             for (int i = 0; i < E.Length; i++)

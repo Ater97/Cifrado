@@ -74,9 +74,6 @@ namespace Encryption
             }
             return 0;
         }
-     
-
-
     }
 }
     

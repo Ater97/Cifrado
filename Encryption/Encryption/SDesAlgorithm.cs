@@ -22,11 +22,8 @@ namespace Encryption
             new int[] {3, 0, 1, 0},
             new int[] {2, 1, 0, 3},
         };
-
         public IList<byte> k1 = new List<byte>(8);
         public IList<byte> k2 = new List<byte>(8);
-
-
         public IList<byte> DecToBytes(int value)
         {
             if (value < 0 || value > 1023)
@@ -93,8 +90,6 @@ namespace Encryption
             result[5] = key[4];
             result[6] = key[9];
             result[7] = key[8];
-            //            result[8] = key[5];
-            //            result[9] = key[9];
             return result;
         }
 
@@ -149,7 +144,6 @@ namespace Encryption
             {
                 result[j] = byte.Parse(stringButes[i].ToString());
             }
-            //Console.Write("symbol='{0}' in dec='{1}' in bin='{2}' ", key, value, string.Join(string.Empty, result));
             return result;
 
         }
@@ -332,7 +326,6 @@ namespace Encryption
             var dec = Convert.ToInt32(stringBin, 2);
             var a = Encoding.GetEncoding("cp866");
             var text = a.GetString(new[] { (byte)dec });
-            //Console.WriteLine(" result='{2}'", symbol, string.Join(string.Empty, bytes), stringBin);
             return text;
         }
 
