@@ -14,7 +14,22 @@ namespace Encryption
         public static void EncriptProcess(string filePath)
         {
             var dataToEncript = FileOperations.getFileBytes(filePath);
-            var key = 62;
+            Console.WriteLine("Enter Key:");
+            int key = 0;
+            try
+            {
+                byte[] array = Encoding.ASCII.GetBytes(Console.ReadLine());
+                for (int i = 0; i < array.Count(); i++)
+                {
+                    key += array[i];
+                }
+                key = RSA.EncriptKEYint(key, array[array.Count() - 1]);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Parse error!");
+                EncriptProcess(filePath);
+            }
             SDesAlgorithm sDes = new SDesAlgorithm();
             sDes.GenerateKeys(key);
             IList<byte> k1 = sDes.getK1();
@@ -59,14 +74,27 @@ namespace Encryption
                 }
             }
             FileOperations.writeEncryptedData(filePath,dataEncripted);
+            #region Ghost
+            FileOperations.CreateNewFileC(filePath);
+            #endregion
         }
 
         public static void DecriptProcess(string filePath)
         {
             var dataToDecript = FileOperations.getFileBytes(filePath);
-            var key = 62;
+            int Key = 0;
+            Console.WriteLine("Enter your personal key");
+            byte[] array = Encoding.ASCII.GetBytes(Console.ReadLine());
+            for (int i = 0; i < array.Count(); i++)
+            {
+                Key += array[i];
+            }
+            Console.WriteLine("Enter the key provided by the system");
+            int privateKey = int.Parse(Console.ReadLine());
+            Key = RSA.EncriptKEYint(Key, array[array.Count() - 1]);
             SDesAlgorithm sDes = new SDesAlgorithm();
-            sDes.GenerateKeys(key);
+            sDes.GenerateKeys(Key);
+            var ext = FileOperations.getExtsC(filePath);
             IList<byte> k1 = sDes.getK1();
             IList<byte> k2 = sDes.getK2();
             var dataDecripted = new byte[dataToDecript.Length];
@@ -108,7 +136,6 @@ namespace Encryption
                     dataDecripted[i + 7] = encryptedbytes[7];
                 }
             }
-            var ext = FileOperations.getExtsC(filePath);
             FileOperations.CreateNewFile(filePath,ext, dataDecripted);
         }
         public static void startProcess(string filePath)
