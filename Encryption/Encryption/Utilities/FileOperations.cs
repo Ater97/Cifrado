@@ -26,6 +26,7 @@ namespace Encryption.Utilities
             FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
             fs.Write(tempByte, 0, tempByte.Count());
             fs.Flush();
+            fs.Close();
             return true;
         }
 
@@ -35,17 +36,11 @@ namespace Encryption.Utilities
             string path = file.Directory.ToString();
             string fileName = Path.GetFileNameWithoutExtension(filePath);
             string NewFileName = path + "\\" + fileName + ext;
-            if (File.Exists(NewFileName))
-            {
-                File.WriteAllBytes(NewFileName,tempByte);
-            }
-            else
-            {
-                FileInfo myFile = new FileInfo(NewFileName);
-                FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
-                fs.Write(tempByte, 0, tempByte.Count());
-                fs.Flush();
-            }
+            FileInfo myFile = new FileInfo(NewFileName);
+            FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
+            fs.Write(tempByte, 0, tempByte.Count());
+            fs.Flush();
+            fs.Close();
             return true;
         }
 
