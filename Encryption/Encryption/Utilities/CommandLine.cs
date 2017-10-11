@@ -64,8 +64,8 @@ namespace Encryption.Utilities
                     //SDES Encrypt 
                     SDesProcess.startProcess(filePath);
                     Console.WriteLine("File encrypted successfully!");
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("Before to continue be sure to save the k1 and k2 to decrypt later!");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Please remember your key and the private key to decrypt!");
                     Console.ForegroundColor = ConsoleColor.White;
                     /*byte[] bytes = FileOperations.getFileBytes(filePath);
                     List<byte> listaEncriptada = SDesProcess.getList(bytes);*/

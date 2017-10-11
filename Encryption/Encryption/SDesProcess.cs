@@ -138,8 +138,6 @@ namespace Encryption
         
         private static string DecriptText(SDesAlgorithm sDes, string text, IList<byte> k1, IList<byte> k2)
         {
-            sDes.k1 = k1;
-            sDes.k2 = k2;
             var str = string.Empty;
             for (var i = 0; i < text.Length; i++)
             {
