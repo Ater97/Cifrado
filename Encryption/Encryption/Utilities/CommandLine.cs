@@ -91,17 +91,26 @@ namespace Encryption.Utilities
 
         private static bool isEncrypting(string[] commands, string method)
         {
-            if (commands[0] == "-c" || commands[0] == "-C") { 
-                return fileExist(commands[1], commands[2], method, "c");
-            }
+            try
+            {
+                if (commands[0] == "-c" || commands[0] == "-C")
+                {
+                    return fileExist(commands[1], commands[2], method, "c");
+                }
 
-            if (commands[0] == "-d" || commands[0] == "-D"){
-                return fileExist(commands[1], commands[2], method,"d");
+                if (commands[0] == "-d" || commands[0] == "-D")
+                {
+                    return fileExist(commands[1], commands[2], method, "d");
+                }
+                Console.WriteLine("ERROR -c or -d command is missing!");
+                Console.ReadKey();
+                return false;
             }
-            Console.WriteLine("ERROR -c or -d command is missing!");
-            Console.ReadKey();
-            return false;
-
+            catch
+            {
+                Console.WriteLine("Check your syntax and try again");
+                return false;
+            }
         }
     }
 }
