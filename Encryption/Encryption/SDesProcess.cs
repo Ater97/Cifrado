@@ -12,7 +12,7 @@ namespace Encryption
     {
         public static void startProcess(string filePath)
         {
-            Console.WriteLine("Enter Key:");
+            /*Console.WriteLine("Enter Key:");
             int key = 0;
             try
             {
@@ -23,19 +23,20 @@ namespace Encryption
             {
                 Console.WriteLine("Parse error!");
                 startProcess(filePath);
-            }
+            }*/
+            var key = 555;
 
             SDesAlgorithm sDes = new SDesAlgorithm();
 
             IList<byte> k1;
             IList<byte> k2;
-            if (!GenerateKeys(key, sDes, out k1, out k2))
+            /*if (!GenerateKeys(key, sDes, out k1, out k2))
             {
                 Console.WriteLine("The key should be in the range: 0 < key < 1023.");
                 startProcess(filePath);
             }
-            Console.WriteLine("");
-            
+            Console.WriteLine("");*/
+            GenerateKeys(key, sDes, out k1, out k2);
             string[] datos = File.ReadAllLines(filePath);
             string[] newDatos = new string[datos.Length];
             List<byte> dataToWrite = new List<byte>();
@@ -56,11 +57,11 @@ namespace Encryption
         {
             SDesAlgorithm sDes = new SDesAlgorithm();
             var ext = FileOperations.getExtsC(filePath); // **return string original path**
-            var key = FileOperations.getKey(filePath);
-            Console.WriteLine("Please type the K1 key generated when encrypt!");
+            var key = 555; ;
+            /*Console.WriteLine("Please type the K1 key generated when encrypt!");
             var k_1 = Console.ReadLine();
             Console.WriteLine("Please type the K2 key generated when encrypt!");
-            var k_2 = Console.ReadLine();
+            var k_2 = Console.ReadLine();*/
             IList<byte> k1;
             IList<byte> k2;
             GenerateKeysGhost(key, sDes, out k1, out k2);
