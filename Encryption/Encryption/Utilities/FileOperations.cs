@@ -85,7 +85,7 @@ namespace Encryption.Utilities
                 FileInfo file = new FileInfo(completePath);
                 string path = file.Directory.ToString();
                 string fileName = Path.GetFileNameWithoutExtension(completePath);
-               // string Extension = Path.GetExtension(completePath);
+                //string Extension = Path.GetExtension(completePath);
                 string Name = Path.GetFileName(completePath);
                 string NewFileName = path + "\\" + fileName + ".cif";
                 FileInfo myFile = new FileInfo(NewFileName + "C");

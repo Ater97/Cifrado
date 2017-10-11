@@ -64,6 +64,14 @@ namespace Encryption
             IList<byte> k1;
             IList<byte> k2;
             GenerateKeysGhost(key, sDes, out k1, out k2);
+            if (sDes.StringToBytes(k_1) != k1 || sDes.StringToBytes(k_2) != k2)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The keys you typed are not corrects!");
+                Console.ReadKey();
+                Console.ForegroundColor = ConsoleColor.White;
+                DecryptAllData(filePath);
+            }
             string[] data = File.ReadAllLines(filePath);
             string newFileName = FileOperations.CreateNewFileForSDesDencryption(filePath, ext);
             string[] dataDecrypted = new string[data.Length];
