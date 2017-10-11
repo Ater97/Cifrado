@@ -68,34 +68,46 @@ namespace Encryption.Utilities
             }
         }
         #region Essential
-        static string OriginalExtenssion;
-        static string A;
         public static void CreateNewFileC(string completePath) 
         {
-            FileInfo file = new FileInfo(completePath);
-            string path = file.Directory.ToString();
-            string fileName = Path.GetFileNameWithoutExtension(completePath);
-            string Extension = Path.GetExtension(completePath);
-            string Name = Path.GetFileName(completePath);
-            string NewFileName = path + "\\" + fileName + ".cif";
-            FileInfo myFile = new FileInfo(NewFileName + "C");
-            if (File.Exists(NewFileName +"C" ))
+            try
             {
-                myFile.Attributes &= ~FileAttributes.Hidden;
+                FileInfo file = new FileInfo(completePath);
+                string path = file.Directory.ToString();
+                string fileName = Path.GetFileNameWithoutExtension(completePath);
+               // string Extension = Path.GetExtension(completePath);
+                string Name = Path.GetFileName(completePath);
+                string NewFileName = path + "\\" + fileName + ".cif";
+                FileInfo myFile = new FileInfo(NewFileName + "C");
+                if (File.Exists(NewFileName + "C"))
+                {
+                    myFile.Attributes &= ~FileAttributes.Hidden;
+                }
+                File.WriteAllText(NewFileName + "C", Name);
+                myFile.Attributes |= FileAttributes.Hidden;
             }
-            File.WriteAllText(NewFileName + "C", Name + "." + Extension);
-            myFile.Attributes |= FileAttributes.Hidden;
+            catch
+            {
+
+            }
            /* FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
             fs.Write(tempByte, 0, tempByte.Count());
             fs.Flush();*/
         }
         public static string getExtsC(string OriginalExtenssion) 
         {
-            FileInfo myFile = new FileInfo(OriginalExtenssion + ".cifC");
-            myFile.Attributes &= ~FileAttributes.Hidden;
-            A = File.ReadLines(OriginalExtenssion + ".cifC").ToString();
-            myFile.Attributes |= FileAttributes.Hidden;
-            return A;
+            try
+            {
+                FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
+                myFile.Attributes &= ~FileAttributes.Hidden;
+                string A = File.ReadLines(OriginalExtenssion + "C").First(); ;
+                myFile.Attributes |= FileAttributes.Hidden;
+                return A;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         #endregion
