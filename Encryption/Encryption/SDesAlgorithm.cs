@@ -43,6 +43,14 @@ namespace Encryption
         }
 
         #region key
+        public IList<byte> getK1()
+        {
+            return k1;
+        }
+        public IList<byte> getK2()
+        {
+            return k2;
+        }
 
         public void GenerateKeys(int key)
         {

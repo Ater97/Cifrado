@@ -29,9 +29,10 @@ namespace Encryption
             int N = PublicKey[0] = p * q; //n,e
             int phi = (p - 1) * (q - 1);
             //
-            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7 * p); //primo relativo entre 1 y phi(n)
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7); //primo relativo entre 1 y phi(n)
             //e * d = 1 mod(phi(n))
-            int d = PrivateKey = getPrivateKey(phi, e, 7); //n,d
+         //   if (UserName > 1000) UserName = 1;
+            int d = PrivateKey = getPrivateKey(phi, e, 7 * UserName); //n,d
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
@@ -63,22 +64,27 @@ namespace Encryption
             return 0;
         }
 
-        #region Int
-
-        public static int EncriptKEYint(int key)
+        //******************************
+        public static int EncriptKEYint(int key, int user)
         {
-            string keys = "Public key: " + getPublicKey(key, key * key) + Environment.NewLine;
-            keys += "Private key :" + getPrivateKey();
+            UserName = user;
+            getPublicKey(9, 15);
+            //string keys = "Public key: " + getPublicKey(p, q) + Environment.NewLine;
+            string keys = "Private key :" + PrivateKey.ToString() + Environment.NewLine;
+            PrivateKey = 0;
             Console.WriteLine(keys);
             return EncriptKey(key);
         }
 
-        public static int DecriptKEYint(int key, int privateKEY, int N)
+        public static int DecriptKEYint(int key, int privateKEY, int N, int user)
         {
             setN(N);
+            UserName = user;
             setPrivateKey(privateKEY);
             return DecryptKey(key);
         }
+        #region Int
+
 
         public static int EncriptKey(int key)
         {

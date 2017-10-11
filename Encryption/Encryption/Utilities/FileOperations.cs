@@ -70,22 +70,15 @@ namespace Encryption.Utilities
         }
         #region Essential
 
-        public static int getKey(string OriginalExtenssion)
-        {
-            FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
-            myFile.Attributes &= ~FileAttributes.Hidden;
-            string[] A = File.ReadAllLines(OriginalExtenssion + "C");
-            var key = int.Parse(A[1]);
-            return key;
-        }
-        public static void CreateNewFileC(string completePath, int key) 
+       
+        public static void CreateNewFileC(string completePath) 
         {
             try
             {
                 FileInfo file = new FileInfo(completePath);
                 string path = file.Directory.ToString();
                 string fileName = Path.GetFileNameWithoutExtension(completePath);
-               // string Extension = Path.GetExtension(completePath);
+                string extension = Path.GetExtension(completePath);
                 string Name = Path.GetFileName(completePath);
                 string NewFileName = path + "\\" + fileName + ".cif";
                 FileInfo myFile = new FileInfo(NewFileName + "C");
@@ -93,20 +86,14 @@ namespace Encryption.Utilities
                 {
                     myFile.Attributes &= ~FileAttributes.Hidden;
                 }
-                string[] dataToWrite = new string[2];
-                dataToWrite[0] = Name;
-                dataToWrite[1] = key.ToString();
-                File.WriteAllLines(NewFileName+"C", dataToWrite);
-                //File.WriteAllText(NewFileName + "C", Name);
+               
+                File.WriteAllText(NewFileName + "C", extension);
                 myFile.Attributes |= FileAttributes.Hidden;
             }
             catch
             {
 
             }
-           /* FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
-            fs.Write(tempByte, 0, tempByte.Count());
-            fs.Flush();*/
         }
         public static string getExtsC(string OriginalExtenssion) 
         {
@@ -114,23 +101,9 @@ namespace Encryption.Utilities
             {
                 FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
                 myFile.Attributes &= ~FileAttributes.Hidden;
-                string[] A = File.ReadAllLines(OriginalExtenssion+"C");
-                var extention = A[0];
-                //string A = File.ReadLines(OriginalExtenssion + "C").First();
+                string A = File.ReadLines(OriginalExtenssion + "C").First();
                 myFile.Attributes |= FileAttributes.Hidden;
-                var ext = string.Empty;
-                for (int i = 0; i < extention.Length; i++)
-                {
-                    if (extention[i].Equals('.'))
-                    {
-                        for (int j = i; j < extention.Length; j++)
-                        {
-                            ext += extention[j];
-                        }
-                        return ext;
-                    }
-                }
-                return A[0];
+                return A; 
             }
             catch
             {
