@@ -28,6 +28,27 @@ namespace Encryption.Utilities
             fs.Flush();
             return true;
         }
+
+        public static bool CreateNewFile(string filePath,string ext, byte[] tempByte)
+        {
+            FileInfo file = new FileInfo(filePath);
+            string path = file.Directory.ToString();
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string NewFileName = path + "\\" + fileName + ext;
+            if (File.Exists(NewFileName))
+            {
+                File.WriteAllBytes(NewFileName,tempByte);
+            }
+            else
+            {
+                FileInfo myFile = new FileInfo(NewFileName);
+                FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
+                fs.Write(tempByte, 0, tempByte.Count());
+                fs.Flush();
+            }
+            return true;
+        }
+
         public static string CreateNewFileForSDes(string filePath)
         {
             FileInfo file = new FileInfo(filePath);

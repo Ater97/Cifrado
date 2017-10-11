@@ -148,6 +148,21 @@ namespace Encryption
 
         }
 
+        public IList<byte> ToBinary(byte value)
+        {
+            if (value < 0 || value > 255)
+            {
+                throw new ArgumentException();
+            }
+            var result = new List<byte>() { 0, 0, 0, 0, 0, 0, 0, 0, };
+            var stringButes = Convert.ToString(value, 2);
+            for (int i = stringButes.Length - 1, j = 7; i >= 0; i--, j--)
+            {
+                result[j] = byte.Parse(stringButes[i].ToString());
+            }
+            return result;
+        }
+
         public IList<byte> ToIP(IList<byte> key)
         {
             var result = new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -264,9 +279,9 @@ namespace Encryption
             return xor2;
         }
 
-        public List<byte> Encript(byte [] bytesToEncript)
+        public byte Encript(byte bytesToEncript)
         {
-            IList<byte> bytes = bytesToEncript.ToList<byte>();
+            IList<byte> bytes = ToBinary(bytesToEncript);
 
             var ip = ToIP(bytes);
 
@@ -279,7 +294,31 @@ namespace Encryption
             var sw2 = SW(fk1, fk2);
 
             var ip_1 = ToIP_1(sw2);
-            return ip.ToList<byte>();
+
+            var stringBin = string.Join(string.Empty, ip_1);
+            var dec = Convert.ToInt32(stringBin, 2);
+            return (byte)dec;
+        }
+
+        public byte Decript(byte bytesToDecrypt)
+        {
+            IList<byte> bytes = ToBinary(bytesToDecrypt);
+
+            var ip = ToIP(bytes);
+
+            var fk1 = Fk(ip, k2);
+
+            var sw = SW(fk1, ip.Skip(4).Take(4).ToList());
+
+            var fk2 = Fk(sw, k1);
+
+            var sw2 = SW(fk1, fk2);
+
+            var ip_1 = ToIP_1(sw2);
+            
+            var stringBin = string.Join(string.Empty, ip_1);
+            var dec = Convert.ToInt32(stringBin, 2);
+            return (byte)dec;
         }
 
         public string Encript(string symbol)
@@ -300,7 +339,6 @@ namespace Encryption
 
             var stringBin = string.Join(string.Empty, ip_1);
             var dec = Convert.ToInt32(stringBin, 2);
-
             var a = Encoding.GetEncoding("cp866");
             var text = a.GetString(new[] { (byte)dec });
             return text;

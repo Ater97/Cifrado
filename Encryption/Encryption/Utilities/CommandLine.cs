@@ -43,7 +43,8 @@ namespace Encryption.Utilities
                 if (enOrDe == "c" && method == "D")
                 {
                     //SDES Encrypt 
-                    SDesProcess.startProcess(filePath);
+                    //SDesProcess.startProcess(filePath);
+                    SDesProcess.EncriptProcess(filePath);
                     Console.WriteLine("File encrypted successfully!");
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Please remember your key and the private key to decrypt!");
@@ -52,7 +53,8 @@ namespace Encryption.Utilities
                 }
                 if (enOrDe == "d" && method == "D")
                 {
-                    SDesProcess.DecryptAllData(filePath);
+                    //SDesProcess.DecryptAllData(filePath);
+                    SDesProcess.DecriptProcess(filePath);
                     Console.WriteLine("File decrypted successfully!");
                     return true;
                 }
