@@ -10,6 +10,22 @@ namespace Encryption
 {
     class SDesProcess
     {
+
+        public static void ShowAllKeys()
+        {
+            var key = 555;
+            SDesAlgorithm sDes = new SDesAlgorithm();
+            IList<byte> k1;
+            IList<byte> k2;
+            GenerateKeysGhost(key,sDes,out k1,out k2);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("K1: " + String.Join(string.Empty,k1));
+            Console.WriteLine("K2: " + String.Join(string.Empty, k2));
+            //key = RSA.EncriptKEYint(key);
+            //Console.WriteLine("Private Key: " + RSA.EncriptKEYint(key));
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public static void startProcess(string filePath)
         {
             /*Console.WriteLine("Enter Key:");
