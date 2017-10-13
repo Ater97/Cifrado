@@ -63,7 +63,7 @@ namespace Encryption.Utilities
                 {
                     //SDES Encrypt 
                     SDesProcess.startProcess(filePath);
-                    Console.WriteLine("File encrypted successfully!");
+                    Console.WriteLine(Environment.NewLine + "File encrypted successfully!");
                     //Console.ForegroundColor = ConsoleColor.Blue;
                     //Console.WriteLine("Before to continue be sure to save the k1 and k2 to decrypt later!");
                     //Console.ForegroundColor = ConsoleColor.White;
@@ -80,7 +80,7 @@ namespace Encryption.Utilities
                     Console.WriteLine("File encrypted successfully!");
                     Console.ReadKey();*/
                     SDesProcess.DecryptAllData(filePath);
-                    Console.WriteLine("File decrypted successfully!");
+                    Console.WriteLine(Environment.NewLine + "File decrypted successfully!");
                     return true;
                 }
             }
@@ -91,16 +91,26 @@ namespace Encryption.Utilities
 
         private static bool isEncrypting(string[] commands, string method)
         {
-            if (commands[0] == "-c" || commands[0] == "-C") { 
-                return fileExist(commands[1], commands[2], method, "c");
-            }
+            try
+            {
+                if (commands[0] == "-c" || commands[0] == "-C")
+                {
+                    return fileExist(commands[1], commands[2], method, "c");
+                }
 
-            if (commands[0] == "-d" || commands[0] == "-D"){
-                return fileExist(commands[1], commands[2], method,"d");
+                if (commands[0] == "-d" || commands[0] == "-D")
+                {
+                    return fileExist(commands[1], commands[2], method, "d");
+                }
+                Console.WriteLine("ERROR -c or -d command is missing!");
+                Console.ReadKey();
+                return false;
             }
-            Console.WriteLine("ERROR -c or -d command is missing!");
-            Console.ReadKey();
-            return false;
+            catch
+            {
+                Console.WriteLine("ERROR try again");
+                return false;
+            }
 
         }
     }

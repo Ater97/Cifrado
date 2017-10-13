@@ -13,46 +13,34 @@ namespace Encryption
 
         public static void ShowAllKeys()
         {
-            var key = 555;
             SDesAlgorithm sDes = new SDesAlgorithm();
             IList<byte> k1;
             IList<byte> k2;
-            GenerateKeysGhost(key,sDes,out k1,out k2);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("K1: " + String.Join(string.Empty,k1));
-            Console.WriteLine("K2: " + String.Join(string.Empty, k2));
-            //key = RSA.EncriptKEYint(key);
-            //Console.WriteLine("Private Key: " + RSA.EncriptKEYint(key));
-            Console.ForegroundColor = ConsoleColor.White;
+            GenerateKeysGhost(555, sDes, out k1, out k2);
+            /*  Console.ForegroundColor = ConsoleColor.Green;
+              Console.WriteLine("K1: " + String.Join(string.Empty,k1));
+              Console.WriteLine("K2: " + String.Join(string.Empty, k2));
+              Console.ForegroundColor = ConsoleColor.White;*/
         }
 
         public static void startProcess(string filePath)
         {
-            /*Console.WriteLine("Enter Key:");
-            int key = 0;
-            try
+            //RSA
+            Console.WriteLine("Type your password:");
+            byte[] arrapas = Encoding.ASCII.GetBytes(Console.ReadLine());
+            var key = 0;
+            for (int i = 0; i < arrapas.Count(); i++)
             {
-                key = int.Parse(s: Console.ReadLine());
-                //key = RSA.EncriptKEYint(key);
+                key += arrapas[i];
             }
-            catch (FormatException)
-            {
-                Console.WriteLine("Parse error!");
-                startProcess(filePath);
-            }*/
-            var key = 555;
+            key = RSA.EncriptKEYint(key, 555);
 
             SDesAlgorithm sDes = new SDesAlgorithm();
 
             IList<byte> k1;
             IList<byte> k2;
-            /*if (!GenerateKeys(key, sDes, out k1, out k2))
-            {
-                Console.WriteLine("The key should be in the range: 0 < key < 1023.");
-                startProcess(filePath);
-            }
-            Console.WriteLine("");*/
-            GenerateKeys(key, sDes, out k1, out k2);
+
+            GenerateKeys(555, sDes, out k1, out k2);
             string[] datos = File.ReadAllLines(filePath);
             string[] newDatos = new string[datos.Length];
             List<byte> dataToWrite = new List<byte>();
@@ -62,33 +50,30 @@ namespace Encryption
                 newDatos[i] = o;
             }
             string newPath = FileOperations.CreateNewFileForSDes(filePath);
-            File.WriteAllLines(newPath,newDatos);
+            File.WriteAllLines(newPath, newDatos);
 
-            #region Ghost
-            FileOperations.CreateNewFileC(filePath,key);
-            #endregion
+            FileOperations.CreateNewFileC(filePath, key);
         }
 
         public static void DecryptAllData(string filePath)
         {
             SDesAlgorithm sDes = new SDesAlgorithm();
             var ext = FileOperations.getExtsC(filePath); // **return string original path**
-            var key = 555; ;
-            /*Console.WriteLine("Please type the K1 key generated when encrypt!");
-            var k_1 = Console.ReadLine();
-            Console.WriteLine("Please type the K2 key generated when encrypt!");
-            var k_2 = Console.ReadLine();*/
+            //RSA
+            Console.WriteLine("Type your password:");
+            byte[] arrapas = Encoding.ASCII.GetBytes(Console.ReadLine());
+
+            var userkey = 0;
+            for (int i = 0; i < arrapas.Count(); i++)
+            {
+                userkey += arrapas[i];
+            }
+            var key = RSA.DecriptKEYint(userkey, FileOperations.getKey(filePath));
+
             IList<byte> k1;
             IList<byte> k2;
             GenerateKeysGhost(key, sDes, out k1, out k2);
-            /*if (sDes.StringToBytes(k_1) != k1 || sDes.StringToBytes(k_2) != k2)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("The keys you typed are not corrects!");
-                Console.ReadKey();
-                Console.ForegroundColor = ConsoleColor.White;
-                DecryptAllData(filePath);
-            }*/
+
             string[] data = File.ReadAllLines(filePath);
             string newFileName = FileOperations.CreateNewFileForSDesDencryption(filePath, ext);
             string[] dataDecrypted = new string[data.Length];
@@ -98,22 +83,6 @@ namespace Encryption
                 dataDecrypted[i] = o;
             }
             File.WriteAllLines(newFileName, dataDecrypted);
-            /*Console.WriteLine("Enter your personal key");
-            int Key = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the key provided by the system");
-            int privateKey = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the public key");
-            int N = int.Parse(Console.ReadLine());
-            RSA.DecriptKEYint(Key, privateKey, N);*/
-            /*
-            string[] data = File.ReadAllLines(newPath);
-            string[] dataDecrypted = new string[data.Length];
-            for (int i = 0; i < data.Length; i++)
-            {
-                var o = DecriptText(sDes, data[i], k1, k2);
-                dataDecrypted[i] = o;
-            }
-            File.WriteAllLines(filePath, dataDecrypted);*/
         }
 
         private static bool GenerateKeysGhost(int key, SDesAlgorithm sDes, out IList<byte> k1, out IList<byte> k2)
@@ -146,6 +115,7 @@ namespace Encryption
             k2 = null;
             if (bytes.Count != 0)
             {
+                Console.WriteLine(Environment.NewLine + "Inf.");
                 bytes = sDes.ToP10(bytes);
                 Print("P10: {0}", bytes);
 
@@ -165,7 +135,7 @@ namespace Encryption
             return false;
         }
 
-        public static List<byte> getList(byte [] bytes)
+        public static List<byte> getList(byte[] bytes)
         {
             SDesAlgorithm sdes = new SDesAlgorithm();
             return sdes.Encript(bytes);
@@ -182,7 +152,7 @@ namespace Encryption
             return str;
         }
 
-        
+
         private static string DecriptText(SDesAlgorithm sDes, string text, IList<byte> k1, IList<byte> k2)
         {
             sDes.k1 = k1;

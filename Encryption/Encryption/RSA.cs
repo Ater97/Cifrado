@@ -24,14 +24,19 @@ namespace Encryption
 
         public static string getPublicKey(int np, int nq) // n prime number
         {
-            int p = UtilitiesForRSA.GetPrimeNumber(np);
+            if (np > 20000 || nq > 20000)
+            {
+                np = 42;
+                nq = 54;
+            }
+            int p = UtilitiesForRSA.GetPrimeNumber(np); //max 30000
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
             int N = PublicKey[0] = p * q; //n,e
             int phi = (p - 1) * (q - 1);
             //
-            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7 * p); //primo relativo entre 1 y phi(n)
+            int e = PublicKey[1] = UtilitiesForRSA.getFirstCoprime(phi, 7); //primo relativo entre 1 y phi(n)
             //e * d = 1 mod(phi(n))
-            int d = PrivateKey = getPrivateKey(phi, e, 7); //n,d
+            PrivateKey = getPrivateKey(phi, e, 3); //n,d
 
             return PublicKey[0].ToString() + "," + PublicKey[1].ToString();
         }
@@ -63,33 +68,36 @@ namespace Encryption
             return 0;
         }
 
+        public static int EncriptKEYint(int key, int text)
+        {
+            getPublicKey(key, key * 2);
+            string keys = Environment.NewLine + "Private key :" + getPrivateKey() + Environment.NewLine;
+            // Console.WriteLine(keys);
+            return EncriptKey(text);
+        }
+
+        public static int DecriptKEYint(int key, int text)
+        {
+            getPublicKey(key, key * 2);
+            // setN(N);
+            //setPrivateKey(privateKEY);
+            return DecryptKey(text);
+        }
+
         #region Int
-
-        public static int EncriptKEYint(int key)
-        {
-            string keys = "Public key: " + getPublicKey(key, key * key) + Environment.NewLine;
-            keys += "Private key :" + getPrivateKey();
-            Console.WriteLine(keys);
-            return EncriptKey(key);
-        }
-
-        public static int DecriptKEYint(int key, int privateKEY, int N)
-        {
-            setN(N);
-            setPrivateKey(privateKEY);
-            return DecryptKey(key);
-        }
 
         public static int EncriptKey(int key)
         {
-            BigInteger P2 = BigInteger.Pow(key, PublicKey[1]);
-            P2 %= PublicKey[0];
+            // BigInteger P2 = BigInteger.Pow(key, PublicKey[1]);
+            BigInteger P2 = BigInteger.ModPow(key, PublicKey[1], PublicKey[0]);
+            //  P2 %= PublicKey[0];
             return (int)(P2);
         }
         public static int DecryptKey(int Dat)
         {//dat^d mod(n)
-            BigInteger P2 = BigInteger.Pow(Dat, PrivateKey);
-            P2 %= PublicKey[0];
+         //BigInteger P2 = BigInteger.Pow(Dat, PrivateKey);
+         // P2 %= PublicKey[0];
+            BigInteger P2 = BigInteger.ModPow(Dat, PrivateKey, PublicKey[0]);
             return (int)P2;
         }
 

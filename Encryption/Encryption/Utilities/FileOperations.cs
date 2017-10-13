@@ -68,15 +68,23 @@ namespace Encryption.Utilities
                 throw;
             }
         }
-        #region Essential
+        #region Ess
 
         public static int getKey(string OriginalExtenssion)
         {
-            FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
-            myFile.Attributes &= ~FileAttributes.Hidden;
-            string[] A = File.ReadAllLines(OriginalExtenssion + "C");
-            var key = int.Parse(A[1]);
-            return key;
+            try
+            {
+                FileInfo myFile = new FileInfo(OriginalExtenssion + "C");
+                myFile.Attributes &= ~FileAttributes.Hidden;
+                string[] A = File.ReadAllLines(OriginalExtenssion + "C");
+                var key = int.Parse(A[1]);
+                myFile.Attributes |= FileAttributes.Hidden;
+                return key;
+            }
+            catch
+            {
+                return 0;
+            }
         }
         public static void CreateNewFileC(string completePath, int key) 
         {
@@ -104,9 +112,6 @@ namespace Encryption.Utilities
             {
 
             }
-           /* FileStream fs = new FileStream(NewFileName, FileMode.Create, FileAccess.Write);
-            fs.Write(tempByte, 0, tempByte.Count());
-            fs.Flush();*/
         }
         public static string getExtsC(string OriginalExtenssion) 
         {
