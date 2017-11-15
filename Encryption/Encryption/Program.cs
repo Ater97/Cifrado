@@ -16,18 +16,25 @@ namespace Encryption
             #region RSA MOCK
             while (false)
             {
+                Console.WriteLine("Write txt");
+                var txt = Console.ReadLine();
+                var e = RSA.EncryptForP(txt);
+                Console.WriteLine(e);
+                Console.WriteLine(RSA.DecryptForP(e));
+
                 //2 y 5 = 3 y 11
-                //5 y 9
-                Console.WriteLine("public key        " + RSA.getPublicKey(50, 96));
+                //5 y 9 = 11 y 23
+              //  Console.WriteLine("public key        " + RSA.getPublicKey(50, 96));
                 /*byte[] a = (System.Text.Encoding.ASCII.GetBytes(Console.ReadLine()));
                 byte[] b = (RSA.Encrypt(a));
                 Console.WriteLine("byte encriptado   " + (System.Text.Encoding.UTF8.GetString(b)));
                 Console.WriteLine("caracter decrypt  " + System.Text.Encoding.UTF8.GetString(RSA.Decrypt(b)));
                 */
-                int a = (int.Parse(Console.ReadLine()));
+              /*  int a = (int.Parse(Console.ReadLine()));
                 int b = RSA.EncriptKey(a);
                 Console.WriteLine("byte encriptado   " + b.ToString());
                 Console.WriteLine("caracter decrypt  " + RSA.DecryptKey(b).ToString());
+                */
                 Console.ReadKey();
             }
             #endregion 

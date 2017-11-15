@@ -21,14 +21,29 @@ namespace Encryption
          *      (n, e) ⇒ Clave pública
 
          */
+        public static string EncryptForP(string txt)
+        {
+            getPublicKey(5, 9);
+            byte[] toBytes = Encoding.ASCII.GetBytes(txt);
+            toBytes = Encrypt(toBytes);
+            return Encoding.Default.GetString(toBytes);
+        }
+        public static string DecryptForP(string txt)
+        {
+            getPublicKey(5, 9);
+            byte[] toBytes = Encoding.Default.GetBytes(txt);
+            toBytes = Decrypt(toBytes);
+            return System.Text.Encoding.Default.GetString(toBytes);
+        }
+
 
         public static string getPublicKey(int np, int nq) // n prime number
         {
-            if (np > 20000 || nq > 20000)
+            /*if (np > 20000 || nq > 20000)
             {
                 np = 42;
                 nq = 54;
-            }
+            }*/
             int p = UtilitiesForRSA.GetPrimeNumber(np); //max 30000
             int q = UtilitiesForRSA.GetPrimeNumber(nq);
             int N = PublicKey[0] = p * q; //n,e
