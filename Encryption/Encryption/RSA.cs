@@ -21,6 +21,17 @@ namespace Encryption
          *      (n, e) ⇒ Clave pública
 
          */
+        public static async Task<object> EncryptForP(object input)
+        {
+            string text = (string)input;
+            return EncryptForP(text);
+        }
+        public static async Task<object> DecryptForP(object input)
+        {
+            string text = (string)input;
+            return DecryptForP(text);
+        }
+
         public static string EncryptForP(string txt)
         {
             getPublicKey(5, 9);
